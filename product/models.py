@@ -23,4 +23,16 @@ class Product(models.Model):
 
 
   def get_link_update(self):
-    return f"<a href=\"update/{self.id}/\">{self.code}</a>"
+    return f'<a href="update/{self.id}/">{self.code}</a>'
+
+
+  def get_button_delete(self):
+    return f'<button class="btn btn-danger" onclick="deleteProductModal(\'{self.id}\', \'{self.item}\')"><i class="far fa-trash-alt fa-lg"></button>'
+
+
+  def get_cost_unit(self):
+    return str(self.cost_unit).replace('.',',')
+
+
+  def get_price_unit(self):
+    return str(self.price_unit).replace('.',',')

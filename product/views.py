@@ -4,6 +4,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.http import JsonResponse
 from .forms import ProductForm
 from django.urls import reverse
+from django.contrib import messages
 
 
 class ProductListView(ListView):
@@ -16,8 +17,9 @@ class ProductListView(ListView):
           "Código do Produto":product.get_link_update(),
           "Item":product.item,
           "Unidade de Medida":product.unit_of_measure,
-          "Custo Unitario":product.cost_unit,
-          "Preço Unitario":product.price_unit
+          "Custo Unitario":product.get_cost_unit(),
+          "Preço Unitario":product.get_price_unit(),
+          "":product.get_button_delete()
         }
         
         for product in products
@@ -36,6 +38,7 @@ class ProductCreateView(CreateView):
 
 
   def get_success_url(self):
+    messages.add_message(self.request, messages.SUCCESS, "Produto cadastrado com sucesso !")
     return reverse('product:index')
 
 
@@ -54,8 +57,14 @@ class ProductUpdateView(UpdateView):
 
 
   def get_success_url(self):
+    messages.add_message(self.request, messages.SUCCESS, "Produto atualizado com sucesso !")
     return reverse('product:index')
 
 
 class ProductDeleteView(DeleteView):
-  pass
+  def post(self, request):
+    id = request.POST.get('id')
+    product = Product.objects.get(id=id)
+    product.delete()
+    response = {'message':'Produto deletado com sucesso !'}
+    return JsonResponse(response)
