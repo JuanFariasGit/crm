@@ -8,15 +8,19 @@ class Product(models.Model):
   level_minimum = models.IntegerField()
   cost_unit = models.DecimalField(decimal_places=2, max_digits=8)
   price_unit = models.DecimalField(decimal_places=2, max_digits=8)
-
-  reated = models.DateTimeField(auto_now_add=True)
+  
+  created = models.DateTimeField(auto_now_add=True)
   modified = models.DateTimeField(auto_now=True)
 
   class Meta:
     db_table = 'product'
-    verbose_name = 'Produtc'
+    verbose_name = 'Product'
     verbose_name_plural = 'Products'
 
 
   def __str__(self):
     return self.item
+
+
+  def get_link_update(self):
+    return f"<a href=\"update/{self.id}/\">{self.code}</a>"
