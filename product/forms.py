@@ -3,8 +3,8 @@ from .models import Product
 
 
 class ProductForm(forms.ModelForm):
-  code = forms.CharField(label='Código do Produto')
   item = forms.CharField(label='Item')
+  code = forms.CharField(label='Código do Produto')
   unit_of_measure = forms.CharField(label='Unidade de Medida')
   level_minimum = forms.IntegerField(label='Estoque Mínimo')
   cost_unit = forms.DecimalField(label='Custo Unitario (R$)')
@@ -14,8 +14,8 @@ class ProductForm(forms.ModelForm):
   class Meta:
     model = Product
     fields = [
-      'code',
       'item',
+      'code',
       'unit_of_measure',
       'level_minimum',
       'cost_unit',

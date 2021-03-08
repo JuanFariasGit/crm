@@ -12,12 +12,15 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class='far fa-hdd'></i> CADASTRO
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'product:index' %}">PRODUTO</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">FORNECEDOR</a>
         </div>
       </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> SAIR</a></li>
     </ul>
   </div>
 </nav>

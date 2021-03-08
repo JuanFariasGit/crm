@@ -14,9 +14,10 @@ class ProductListView(ListView):
       [
         {
           "DT_RowId":f"row_{product.id}",
-          "Código do Produto":product.get_link_update(),
-          "Item":product.item,
+          "Item":product.get_link_update(),
+          "Código do Produto":product.code,
           "Unidade de Medida":product.unit_of_measure,
+          "Estoque Mínimo":product.level_minimum,
           "Custo Unitario":product.get_cost_unit(),
           "Preço Unitario":product.get_price_unit(),
           "":product.get_button_delete()

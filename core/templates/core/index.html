@@ -1,1 +1,17 @@
 {% extends "core/model-page.html" %}
+
+
+{% block content %}
+<div class="row">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header text-center bg-dark text-white">
+        TOTAL DE PRODUTOS
+      </div>
+      <div class="card-body text-center">
+        <h5>{{ product_quantity }}</h5>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

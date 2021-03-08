@@ -9,10 +9,10 @@
 <form method="POST" autocomplete="off">{% csrf_token %}
   <div class="row">
     <div class="col-md-6">
-      {{ form.code|as_crispy_field }}
+      {{ form.item|as_crispy_field }}
     </div>
     <div class="col-md-6">
-      {{ form.item|as_crispy_field }}
+      {{ form.code|as_crispy_field }}
     </div>
     <div class="col-md-6">
       {{ form.unit_of_measure|as_crispy_field }}
