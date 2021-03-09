@@ -23,7 +23,7 @@ class Product(models.Model):
 
 
   def get_link_update(self):
-    return f'<a href="update/{self.id}/">{self.code}</a>'
+    return f'<a href="update/{self.id}/">{self.item}</a>'
 
 
   def get_button_delete(self):
@@ -31,8 +31,8 @@ class Product(models.Model):
 
 
   def get_cost_unit(self):
-    return str(self.cost_unit).replace('.',',')
+    return f'R$ {str(self.cost_unit).replace(".",",")}'
 
 
   def get_price_unit(self):
-    return str(self.price_unit).replace('.',',')
+    return  f'R$ {str(self.price_unit).replace(".",",")}'
