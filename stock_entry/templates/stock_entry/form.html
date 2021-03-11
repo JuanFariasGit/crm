@@ -1,0 +1,27 @@
+{% extends "core/model-page.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h5 class="text-center">
+  {% if 'create' in request.path %} CADASTRAR ENTRADA {% endif %} 
+  {% if 'update' in request.path %} EDITAR ENTRADA {% endif %}
+</h5>
+<form method="POST" autocomplete="off">{% csrf_token %}
+  <div class="row">
+    <div class="col-md-4">
+      {{ form.purchase_date|as_crispy_field }}
+    </div>
+    <div class="col-md-4">
+      {{ form.product|as_crispy_field }}
+    </div>
+    <div class="col-md-4">
+      {{ form.provider|as_crispy_field }}
+    </div>
+    <div class="col-md-4">
+      {{ form.quantity|as_crispy_field }}
+    </div>
+  </div>
+  <a class="btn btn-outline-primary" href="{% url 'stock_entry:main' %}">VOLTAR</a>
+  <button class="btn btn-primary">SALVAR</button>
+</form>
+{% endblock %}

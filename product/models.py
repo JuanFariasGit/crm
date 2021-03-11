@@ -12,6 +12,7 @@ class Product(models.Model):
   created = models.DateTimeField(auto_now_add=True)
   modified = models.DateTimeField(auto_now=True)
 
+
   class Meta:
     db_table = 'product'
     verbose_name = 'Product'
@@ -27,7 +28,7 @@ class Product(models.Model):
 
 
   def get_button_delete(self):
-    return f'<button class="btn btn-danger" onclick="deleteProductModal(\'{self.id}\', \'{self.item}\')"><i class="far fa-trash-alt fa-lg"></button>'
+    return f'<button class="btn btn-danger" onclick="deleteProductModal(\'{self.id}\', \'{self.item}\')"><i class="far fa-trash-alt fa-lg"></i></button>'
 
 
   def get_cost_unit(self):

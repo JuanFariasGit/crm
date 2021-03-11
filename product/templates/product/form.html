@@ -8,26 +8,26 @@
 </h5>
 <form method="POST" autocomplete="off">{% csrf_token %}
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
       {{ form.item|as_crispy_field }}
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
       {{ form.code|as_crispy_field }}
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
       {{ form.unit_of_measure|as_crispy_field }}
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
       {{ form.level_minimum|as_crispy_field }}
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
       {{ form.cost_unit|as_crispy_field }}
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
       {{ form.price_unit|as_crispy_field }}
     </div>
   </div>
-  <a class="btn btn-outline-primary" href="{% url 'product:index' %}">VOLTAR</a>
+  <a class="btn btn-outline-primary" href="{% url 'product:main' %}">VOLTAR</a>
   <button class="btn btn-primary">SALVAR</button>
 </form>
 {% endblock %}

@@ -8,18 +8,28 @@
       <li class="nav-item {% if request.path == '/' %} active {% endif %}">
         <a class="nav-link" href="{% url 'index' %}"><i class="fas fa-tachometer-alt"></i> DASHBOARD</a>
       </li>
-      <li class="nav-item dropdown {% if 'product' in request.path %} active {% endif %} {% if 'provider' in request.path %} active {% endif %}">
+      <li class="nav-item dropdown 
+        {% if 'product' in request.path %} active {% endif %} 
+        {% if 'provider' in request.path %} active {% endif %}
+        {% if 'store' in request.path %} active {% endif %}"
+      >
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class='far fa-hdd'></i> CADASTRO
         </a>
         <div class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'product:index' %}">PRODUTO</a>
+          <a class="dropdown-item" href="{% url 'product:main' %}">PRODUTOS</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">FORNECEDOR</a>
+          <a class="dropdown-item" href="{% url 'provider:main' %}">FORNECEDORES</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'store:main' %}">LOJAS</a>
         </div>
+      </li>
+      <li class="nav-item {% if 'stock_entry' in request.path %} active {% endif %}">
+        <a class="nav-link" href="{% url 'stock_entry:main' %}">ENTRADAS</a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
+      <span class="navbar-text text-warning">Bem-vindo {{ user.get_username }}</span>
       <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> SAIR</a></li>
     </ul>
   </div>

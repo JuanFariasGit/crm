@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as app_login, logout as app_logout
 from django.contrib import messages
 from product.models import Product
+from provider.models import Provider
+from store.models import Store
 
 
 def login(request):
@@ -28,4 +30,12 @@ def logout(request):
 
 def dashboard(request):
   product_quantity = len(Product.objects.all()) 
-  return render(request, 'core/index.html', {'product_quantity': product_quantity})
+  provider_quantity = len(Provider.objects.all())
+  store_quantity = len(Store.objects.all())
+  return render(request, 'core/index.html', 
+    {
+      'product_quantity': product_quantity,
+      'provider_quantity': provider_quantity,
+      'store_quantity': store_quantity
+    }
+  )

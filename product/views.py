@@ -18,8 +18,8 @@ class ProductListView(ListView):
           "Código do Produto":product.code,
           "Unidade de Medida":product.unit_of_measure,
           "Estoque Mínimo":product.level_minimum,
-          "Custo Unitario":product.get_cost_unit(),
-          "Preço Unitario":product.get_price_unit(),
+          "Custo Unitário":product.get_cost_unit(),
+          "Preço Unitário":product.get_price_unit(),
           "":product.get_button_delete()
         }
         
@@ -40,7 +40,7 @@ class ProductCreateView(CreateView):
 
   def get_success_url(self):
     messages.add_message(self.request, messages.SUCCESS, "Produto cadastrado com sucesso !")
-    return reverse('product:index')
+    return reverse('product:main')
 
 
 class ProductUpdateView(UpdateView):
@@ -59,7 +59,7 @@ class ProductUpdateView(UpdateView):
 
   def get_success_url(self):
     messages.add_message(self.request, messages.SUCCESS, "Produto atualizado com sucesso !")
-    return reverse('product:index')
+    return reverse('product:main')
 
 
 class ProductDeleteView(DeleteView):

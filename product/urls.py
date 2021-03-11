@@ -7,7 +7,7 @@ from .views import ProductListView, ProductCreateView, ProductUpdateView, Produc
 app_name = 'product'
 
 urlpatterns = [
-  path('', login_required(TemplateView.as_view(template_name='product/index.html')), name='index'),
+  path('', login_required(TemplateView.as_view(template_name='product/main.html')), name='main'),
   path('list/', login_required(ProductListView.as_view()), name='list'),
   path('create/', login_required(ProductCreateView.as_view()), name='create'),
   path('update/<int:id>/', login_required(ProductUpdateView.as_view()), name='update'),

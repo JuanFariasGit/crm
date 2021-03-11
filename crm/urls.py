@@ -10,5 +10,8 @@ urlpatterns = [
     path('login/verify/', views.verify_login, name='verify_login'),
     path('login/logout/', views.logout, name='logout'),
     path('', login_required(views.dashboard), name='index'),
-    path('product/', include('product.urls'))
+    path('product/', include('product.urls')),
+    path('provider/', include('provider.urls')),
+    path('store/', include('store.urls')),
+    path('stock_entry/', include('stock_entry.urls'))
 ]
