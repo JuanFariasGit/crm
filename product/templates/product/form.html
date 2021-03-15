@@ -18,13 +18,13 @@
       {{ form.unit_of_measure|as_crispy_field }}
     </div>
     <div class="col-md-4">
+      {{ form.expiration_date|as_crispy_field }}
+    </div>
+    <div class="col-md-4">
       {{ form.level_minimum|as_crispy_field }}
     </div>
     <div class="col-md-4">
-      {{ form.cost_unit|as_crispy_field }}
-    </div>
-    <div class="col-md-4">
-      {{ form.price_unit|as_crispy_field }}
+      {{ form.level_maximum|as_crispy_field }}
     </div>
   </div>
   <a class="btn btn-outline-primary" href="{% url 'product:main' %}">VOLTAR</a>

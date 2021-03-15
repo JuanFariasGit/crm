@@ -10,6 +10,7 @@ urlpatterns = [
     path('login/verify/', views.verify_login, name='verify_login'),
     path('login/logout/', views.logout, name='logout'),
     path('', login_required(views.dashboard), name='index'),
+    # includes
     path('product/', include('product.urls')),
     path('provider/', include('provider.urls')),
     path('store/', include('store.urls')),

@@ -18,8 +18,7 @@ class ProductListView(ListView):
           "Código do Produto":product.code,
           "Unidade de Medida":product.unit_of_measure,
           "Estoque Mínimo":product.level_minimum,
-          "Custo Unitário":product.get_cost_unit(),
-          "Preço Unitário":product.get_price_unit(),
+          "Estoque Máximo":product.level_maximum,
           "":product.get_button_delete()
         }
         

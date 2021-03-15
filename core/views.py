@@ -4,6 +4,7 @@ from django.contrib import messages
 from product.models import Product
 from provider.models import Provider
 from store.models import Store
+from stock_entry.models import StockEntry
 
 
 def login(request):
@@ -32,10 +33,13 @@ def dashboard(request):
   product_quantity = len(Product.objects.all()) 
   provider_quantity = len(Provider.objects.all())
   store_quantity = len(Store.objects.all())
+  total_cost = StockEntry.get_total_cost()
+  
   return render(request, 'core/index.html', 
     {
       'product_quantity': product_quantity,
       'provider_quantity': provider_quantity,
-      'store_quantity': store_quantity
+      'store_quantity': store_quantity,
+      'total_cost': total_cost
     }
   )

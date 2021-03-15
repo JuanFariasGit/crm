@@ -20,6 +20,9 @@
     <div class="col-md-4">
       {{ form.quantity|as_crispy_field }}
     </div>
+    <div class="col-md-4">
+      {{ form.cost_unit|as_crispy_field }}
+    </div>
   </div>
   <a class="btn btn-outline-primary" href="{% url 'stock_entry:main' %}">VOLTAR</a>
   <button class="btn btn-primary">SALVAR</button>

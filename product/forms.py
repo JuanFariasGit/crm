@@ -7,8 +7,7 @@ class ProductForm(forms.ModelForm):
   code = forms.CharField(label='Código do Produto')
   unit_of_measure = forms.CharField(label='Unidade de Medida')
   level_minimum = forms.IntegerField(label='Estoque Mínimo')
-  cost_unit = forms.DecimalField(label='Custo Unitario (R$)')
-  price_unit = forms.DecimalField(label='Preço Unitario (R$)')
+  level_maximum = forms.IntegerField(label='Estoque Máximo')
 
 
   class Meta:
@@ -18,6 +17,5 @@ class ProductForm(forms.ModelForm):
       'code',
       'unit_of_measure',
       'level_minimum',
-      'cost_unit',
-      'price_unit'
+      'level_maximum'
     ]
