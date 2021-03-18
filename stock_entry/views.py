@@ -7,9 +7,8 @@ from django.urls import reverse
 from django.contrib import messages
 
 
-
 class StockEntryListView(ListView):
-   def post(self, request):
+  def post(self, request):
     stock_entry = StockEntry.objects.all()
     response = {"data":
       [

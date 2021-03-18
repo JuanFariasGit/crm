@@ -21,7 +21,7 @@ class ProductListView(ListView):
           "Estoque Máximo":product.level_maximum,
           "":product.get_button_delete()
         }
-        
+
         for product in products
       ]
     }

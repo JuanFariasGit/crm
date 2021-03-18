@@ -7,7 +7,7 @@ class Product(models.Model):
   unit_of_measure = models.CharField(max_length=30)
   level_minimum = models.IntegerField()
   level_maximum = models.IntegerField()
-  
+
   created = models.DateTimeField(auto_now_add=True)
   modified = models.DateTimeField(auto_now=True)
 
@@ -20,7 +20,7 @@ class Product(models.Model):
 
   def __str__(self):
     return self.item
-    
+
 
   def get_link_update(self):
     return f'<a href="update/{self.id}/">{self.item}</a>'

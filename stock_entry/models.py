@@ -1,6 +1,7 @@
 from django.db import models
 from product.models import Product
 from provider.models import Provider
+from stock_exit.models import StockExit
 import math
 
 
@@ -39,8 +40,15 @@ class StockEntry(models.Model):
 
 
   def get_total_cost():
-    values = [entry.cost_unit*entry.quantity for entry in StockEntry.objects.all()]
-    return str(f'R$ {math.fsum(values):.2f}').replace('.',',')
+    return str(f'R$ {math.fsum([entry.cost_unit*entry.quantity for entry in StockEntry.objects.all()]):.2f}').replace('.',',')
+
+
+  def get_total_cost_by_id(id):
+    return math.fsum([entry.cost_unit*entry.quantity for entry in StockEntry.objects.filter(product__id=id)])
+
+
+  def get_number_of_product_entries(id):
+    return int(math.fsum([product_in_entry.quantity for product_in_entry in StockEntry.objects.filter(product__id=id)]))
 
 
   def get_expiration_date(self):
