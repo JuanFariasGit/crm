@@ -7,6 +7,7 @@ from store.models import Store
 from stock_entry.models import StockEntry
 from stock_exit.models import StockExit
 from django.http import JsonResponse
+from ultils.ultils import currency_format
 
 
 def login(request):
@@ -84,9 +85,9 @@ def get_data_inventory(request):
         "Estoque Mínimo":product.level_minimum,
         "Estoque Máximo":product.level_maximum,
         "Status":get_status(product.id),
-        "Receita Total":f'R$ {StockExit.get_total_revenue_by_id(product.id):.2f}'.replace(".",","),
-        "Custo Total":f'R$ {StockEntry.get_total_cost_by_id(product.id):.2f}'.replace(".",","),
-        "Lucro":f'R$ {get_total_profit(product.id):.2f}'.replace(".",",")
+        "Receita Total":currency_format(StockExit.get_total_revenue_by_id(product.id)),
+        "Custo Total":currency_format(StockEntry.get_total_cost_by_id(product.id)),
+        "Lucro":currency_format(get_total_profit(product.id))
       }
 
       for product in products

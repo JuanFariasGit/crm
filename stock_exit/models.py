@@ -2,6 +2,7 @@ from django.db import models
 from product.models import Product
 from store.models import Store
 import math
+from ultils.ultils import currency_format, date_format
 
 
 class StockExit(models.Model):
@@ -26,7 +27,7 @@ class StockExit(models.Model):
 
 
   def get_date_of_sale(self):
-    return self.date_of_sale.strftime('%d/%m/%Y')
+    return date_format(self.date_of_sale)
 
 
   def get_link_update(self):
@@ -34,15 +35,15 @@ class StockExit(models.Model):
 
 
   def get_price_unit(self):
-    return f'R$ {str(self.price_unit).replace(".",",")}'
+    return currency_format(self.price_unit)
 
 
   def get_number_of_product_exit(id):
-    return int(math.fsum([product_in_exit.quantity for product_in_exit in StockExit.objects.filter(product__id=id)]))
+    return math.fsum([product_in_exit.quantity for product_in_exit in StockExit.objects.filter(product__id=id)])
 
 
   def get_total_sale(self):
-    return f'R$ {str(self.price_unit*self.quantity).replace(".",",")}'
+    return currency_format(self.price_unit*self.quantity)
 
 
   def get_total_revenue_by_id(id):

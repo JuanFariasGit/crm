@@ -3,6 +3,7 @@ from product.models import Product
 from provider.models import Provider
 from stock_exit.models import StockExit
 import math
+from ultils.ultils import currency_format, date_format
 
 
 class StockEntry(models.Model):
@@ -28,19 +29,19 @@ class StockEntry(models.Model):
 
 
   def get_purchase_date(self):
-        return self.purchase_date.strftime('%d/%m/%Y')
+    return date_format(self.purchase_date)
 
 
   def get_total_purchase(self):
-    return f'R$ {str(self.cost_unit*self.quantity).replace(".",",")}'
+    return currency_format(self.cost_unit*self.quantity)
 
 
   def get_cost_unit(self):
-    return f'R$ {str(self.cost_unit).replace(".",",")}'
+    return currency_format(self.cost_unit)
 
 
   def get_total_cost():
-    return str(f'R$ {math.fsum([entry.cost_unit*entry.quantity for entry in StockEntry.objects.all()]):.2f}').replace('.',',')
+    return currency_format(math.fsum([entry.cost_unit*entry.quantity for entry in StockEntry.objects.all()]))
 
 
   def get_total_cost_by_id(id):
@@ -48,14 +49,14 @@ class StockEntry(models.Model):
 
 
   def get_number_of_product_entries(id):
-    return int(math.fsum([product_in_entry.quantity for product_in_entry in StockEntry.objects.filter(product__id=id)]))
+    return math.fsum([product_in_entry.quantity for product_in_entry in StockEntry.objects.filter(product__id=id)])
 
 
   def get_expiration_date(self):
     if self.expiration_date is None:
       return "Sem validade"
     else:
-      return self.expiration_date.strftime('%d/%m/%Y')
+      return date_format(self.expiration_date)
 
 
   def get_link_update(self):
