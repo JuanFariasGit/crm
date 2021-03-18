@@ -15,18 +15,18 @@
 <div id="message-ajax"></div>
 <div class="table-responsive p-1">
   <h5 class="text-center">ENTRADAS</h5>
-  <a class="btn btn-primary mb-3" href="{% url 'stock_entry:create' %}"><i class="fas fa-plus-circle fa-lg"></i></a>  
+  <a class="btn btn-primary mb-3" href="{% url 'stock_entry:create' %}"><i class="fas fa-plus-circle fa-lg"></i></a>
   <table id="table" class="table table-striped table-bordered text-center">
     <thead class="thead-dark">
       <tr>
-        <th>Data da Compra</th>
-        <th>Produto</th>
-        <th>Data de Validade</th>
-        <th>Fornecedor</th>
-        <th>Quantidade</th>
-        <th>Custo Unitário</th>
-        <th>Total</th>
-        <th>"</th>
+        <th class="min-tablet">Data da Compra</th>
+        <th class="all">Produto</th>
+        <th class="min-desktop">Data de Validade</th>
+        <th class="min-desktop">Fornecedor</th>
+        <th class="min-desktop">Quantidade</th>
+        <th class="min-desktop">Custo Unitário</th>
+        <th class="min-desktop">Total</th>
+        <th class="all">"</th>
       </tr>
     </thead>
   </table>
@@ -41,82 +41,84 @@
 </div>
 {% endblock %}
 
-{% block script %} 
+{% block script %}
 <script>
   const cookie = document.cookie
   const csrf_token = cookie.split("=")[1]
 
   const table = $('#table').DataTable( {
-        "columnDefs": [{
-        "targets": [ 7 ],
-        "orderable": false
-        }],
-        "order": [[ 0, "desc" ]],
-        "ajax": {
-          "method": "POST",
-          "url": "{% url 'stock_entry:list' %}",
-          "headers": {
-            "X-CSRFToken": csrf_token,
-          }
-        },
-        "columns": [
-            {"data":"Data da Compra"},
-            {"data":"Produto"},
-            {"data":"Data de Validade"},
-            {"data":"Fornecedor"},
-            {"data":"Quantidade"},
-            {"data":"Custo Unitário"},
-            {"data":"Total"},
-            {"data":""}
-        ],
-        "lengthMenu": [[5, 10, 15], [5, 10, 15]],
-        "language": {
-            "infoFiltered":   "(filtrado do total de _MAX_ registros)",
-            "infoEmpty":      "Mostrando 0 até 0 de 0 registros",
-            "zeroRecords": "Nenhum registro correspondente encontrado",
-            "loadingRecords": "Carregando...",
-            "lengthMenu": "_MENU_ registros por página",
-            "info": "Mostrando _START_ até _END_ de _TOTAL_ registros",
-            "search": "Pesquisar",
-            "paginate": {
-            "next":  "›",
-            "previous": "‹"
-            }
-        },
-    });
-
-    const deleteStockEntryModal = (id, data_compra, produto) => {
-      $('#modal').modal('show')
-      $('#modal').find('.modal-header').html(`<h5>Deseja realmente deletar a entrada do produto <strong class="text-danger">${produto}</strong> do dia <strong class="text-danger">${data_compra}</strong> ?</h5>`)
-      $('#modal').find('.modal-footer').html(`<button class="btn btn-outline-secondary" onclick="closeModal()">Não</button> <button class="btn btn-primary" onclick="deleteStockEntry('${id}')">Sim</button>`)
-    }
-
-    const closeModal = () => {
-      $('#modal').modal('hide')
-      $('#modal').find('.modal-header').html('')
-      $('#modal').find('.modal-footer').html('')
-    }
-
-    const deleteStockEntry= (id) => {
-      $.ajax ({
-        "method": "POST",
-        "url": "{% url 'stock_entry:delete' %}",
-        "headers": {
-          "X-CSRFToken": csrf_token,
-        },
-        "data": {"id": id},
-        success: function(response) {
-          table.row(`#row_${id}`).remove().draw(false);
-          closeModal()
-          $("#message-ajax").html(`
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            ${response.message}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>`)
+    "responsive": true,
+    "autoWidth": false,
+    "columnDefs": [{
+    "targets": [ 7 ],
+    "orderable": false
+    }],
+    "order": [[ 0, "desc" ]],
+    "ajax": {
+      "method": "POST",
+      "url": "{% url 'stock_entry:list' %}",
+      "headers": {
+        "X-CSRFToken": csrf_token,
+      }
+    },
+    "columns": [
+        {"data":"Data da Compra"},
+        {"data":"Produto"},
+        {"data":"Data de Validade"},
+        {"data":"Fornecedor"},
+        {"data":"Quantidade"},
+        {"data":"Custo Unitário"},
+        {"data":"Total"},
+        {"data":""}
+    ],
+    "lengthMenu": [[5, 10, 15], [5, 10, 15]],
+    "language": {
+        "infoFiltered":   "(filtrado do total de _MAX_ registros)",
+        "infoEmpty":      "Mostrando 0 até 0 de 0 registros",
+        "zeroRecords": "Nenhum registro correspondente encontrado",
+        "loadingRecords": "Carregando...",
+        "lengthMenu": "_MENU_ registros por página",
+        "info": "Mostrando _START_ até _END_ de _TOTAL_ registros",
+        "search": "Pesquisar",
+        "paginate": {
+        "next":  "›",
+        "previous": "‹"
         }
-      })
-    }
+    },
+  });
+
+  const deleteStockEntryModal = (id, data_compra, produto) => {
+    $('#modal').modal('show')
+    $('#modal').find('.modal-header').html(`<h5>Deseja realmente deletar a entrada do produto <strong class="text-danger">${produto}</strong> do dia <strong class="text-danger">${data_compra}</strong> ?</h5>`)
+    $('#modal').find('.modal-footer').html(`<button class="btn btn-outline-secondary" onclick="closeModal()">Não</button> <button class="btn btn-primary" onclick="deleteStockEntry('${id}')">Sim</button>`)
+  }
+
+  const closeModal = () => {
+    $('#modal').modal('hide')
+    $('#modal').find('.modal-header').html('')
+    $('#modal').find('.modal-footer').html('')
+  }
+
+  const deleteStockEntry= (id) => {
+    $.ajax ({
+      "method": "POST",
+      "url": "{% url 'stock_entry:delete' %}",
+      "headers": {
+        "X-CSRFToken": csrf_token,
+      },
+      "data": {"id": id},
+      success: function(response) {
+        table.row(`#row_${id}`).remove().draw(false);
+        closeModal()
+        $("#message-ajax").html(`
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          ${response.message}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>`)
+      }
+    })
+  }
 </script>
 {% endblock %}

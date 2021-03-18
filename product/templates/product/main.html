@@ -19,12 +19,12 @@
   <table id="table" class="table table-striped table-bordered text-center">
     <thead class="thead-dark">
       <tr>
-        <th>Item</th>
-        <th>Código do Produto</th>
-        <th>Unidade de Medida</th>
-        <th>Estoque Mínimo</th>
-        <th>Estoque Máximo</th>
-        <th>"</th>
+        <th class="all">Item</th>
+        <th class="min-tablet">Código do Produto</th>
+        <th class="min-desktop">Unidade de Medida</th>
+        <th class="min-desktop">Estoque Mínimo</th>
+        <th class="min-desktop">Estoque Máximo</th>
+        <th class="all">"</th>
       </tr>
     </thead>
   </table>
@@ -45,73 +45,75 @@
   const csrf_token = cookie.split("=")[1]
 
   const table = $('#table').DataTable( {
-        "columnDefs": [{
-        "targets": [ 5 ],
-        "orderable": false
-        }],
-        "ajax": {
-          "method": "POST",
-          "url": "{% url 'product:list' %}",
-          "headers": {
-            "X-CSRFToken": csrf_token,
-          }
-        },
-        "columns": [
-            {"data":"Item"},
-            {"data":"Código do Produto"},
-            {"data":"Unidade de Medida"},
-            {"data":"Estoque Mínimo"},
-            {"data":"Estoque Máximo"},
-            {"data":""}
-        ],
-        "lengthMenu": [[5, 10, 15], [5, 10, 15]],
-        "language": {
-            "infoFiltered":   "(filtrado do total de _MAX_ registros)",
-            "infoEmpty":      "Mostrando 0 até 0 de 0 registros",
-            "zeroRecords": "Nenhum registro correspondente encontrado",
-            "loadingRecords": "Carregando...",
-            "lengthMenu": "_MENU_ registros por página",
-            "info": "Mostrando _START_ até _END_ de _TOTAL_ registros",
-            "search": "Pesquisar",
-            "paginate": {
-            "next":  "›",
-            "previous": "‹"
-            }
-        },
-    });
-
-    const deleteProductModal = (id, item) => {
-      $('#modal').modal('show')
-      $('#modal').find('.modal-header').html(`<h5>Deseja realmente deletar o produto <strong class="text-danger">${item}</strong> ?</h5>`)
-      $('#modal').find('.modal-footer').html(`<button class="btn btn-outline-secondary" onclick="closeModal()">Não</button> <button class="btn btn-primary" onclick="deleteProduct('${id}')">Sim</button>`)
-    }
-
-    const closeModal = () => {
-      $('#modal').modal('hide')
-      $('#modal').find('.modal-header').html('')
-      $('#modal').find('.modal-footer').html('')
-    }
-
-    const deleteProduct = (id) => {
-      $.ajax ({
-        "method": "POST",
-        "url": "{% url 'product:delete' %}",
-        "headers": {
-          "X-CSRFToken": csrf_token,
-        },
-        "data": {"id": id},
-        success: function(response) {
-          table.row(`#row_${id}`).remove().draw(false);
-          closeModal()
-          $("#message-ajax").html(`
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            ${response.message}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>`)
+    "responsive": true,
+    "autoWidth": false,
+    "columnDefs": [{
+    "targets": [ 5 ],
+    "orderable": false
+    }],
+    "ajax": {
+      "method": "POST",
+      "url": "{% url 'product:list' %}",
+      "headers": {
+        "X-CSRFToken": csrf_token,
+      }
+    },
+    "columns": [
+        {"data":"Item"},
+        {"data":"Código do Produto"},
+        {"data":"Unidade de Medida"},
+        {"data":"Estoque Mínimo"},
+        {"data":"Estoque Máximo"},
+        {"data":""}
+    ],
+    "lengthMenu": [[5, 10, 15], [5, 10, 15]],
+    "language": {
+        "infoFiltered":   "(filtrado do total de _MAX_ registros)",
+        "infoEmpty":      "Mostrando 0 até 0 de 0 registros",
+        "zeroRecords": "Nenhum registro correspondente encontrado",
+        "loadingRecords": "Carregando...",
+        "lengthMenu": "_MENU_ registros por página",
+        "info": "Mostrando _START_ até _END_ de _TOTAL_ registros",
+        "search": "Pesquisar",
+        "paginate": {
+        "next":  "›",
+        "previous": "‹"
         }
-      })
-    }
+    },
+  });
+
+  const deleteProductModal = (id, item) => {
+    $('#modal').modal('show')
+    $('#modal').find('.modal-header').html(`<h5>Deseja realmente deletar o produto <strong class="text-danger">${item}</strong> ?</h5>`)
+    $('#modal').find('.modal-footer').html(`<button class="btn btn-outline-secondary" onclick="closeModal()">Não</button> <button class="btn btn-primary" onclick="deleteProduct('${id}')">Sim</button>`)
+  }
+
+  const closeModal = () => {
+    $('#modal').modal('hide')
+    $('#modal').find('.modal-header').html('')
+    $('#modal').find('.modal-footer').html('')
+  }
+
+  const deleteProduct = (id) => {
+    $.ajax ({
+      "method": "POST",
+      "url": "{% url 'product:delete' %}",
+      "headers": {
+        "X-CSRFToken": csrf_token,
+      },
+      "data": {"id": id},
+      success: function(response) {
+        table.row(`#row_${id}`).remove().draw(false);
+        closeModal()
+        $("#message-ajax").html(`
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          ${response.message}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>`)
+      }
+    })
+  }
 </script>
 {% endblock %}

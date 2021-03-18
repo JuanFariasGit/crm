@@ -20,7 +20,7 @@ class ProviderListView(ListView):
           "Endereço":provider.address,
           "":provider.get_button_delete()
         }
-        
+
         for provider in providers
       ]
     }
@@ -65,5 +65,5 @@ class ProviderDeleteView(DeleteView):
     id = request.POST.get('id')
     provider = Provider.objects.get(id=id)
     provider.delete()
-    response = {'message':'Empresa deletada com sucesso !'}
+    response = {'message':'Fornecedor deletado com sucesso !'}
     return JsonResponse(response)
