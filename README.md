@@ -1,5 +1,5 @@
 # crm
-Com que aprendi com professor Rafael Galleani na Digital Innovation One Inc. e mais os conhecimentos que eu já possuía, fiz um crm de gestão de estoque.
+Com que aprendi com professor Rafael Galleani na Digital Innovation One Inc. e mais os conhecimentos que eu já possuía, fiz um crm de gestão de estoque.<br>
 Tecnologias Usadas:
 <ul>
 <li>Django Framework</li>
