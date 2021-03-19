@@ -41,7 +41,7 @@ class StockEntry(models.Model):
 
 
   def get_total_cost():
-    return currency_format(math.fsum([entry.cost_unit*entry.quantity for entry in StockEntry.objects.all()]))
+    return math.fsum([entry.cost_unit*entry.quantity for entry in StockEntry.objects.all()])
 
 
   def get_total_cost_by_id(id):

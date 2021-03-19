@@ -50,5 +50,9 @@ class StockExit(models.Model):
     return math.fsum([exit.price_unit*exit.quantity for exit in StockExit.objects.filter(product_id=id)])
 
 
+  def get_total_revenue():
+    return math.fsum([exit.price_unit*exit.quantity for exit in StockExit.objects.all()])
+
+
   def get_button_delete(self):
     return f'<button class="btn btn-danger" onclick="deleteStockExitModal(\'{self.id}\', \'{self.get_date_of_sale()}\', \'{self.product.item}\')"><i class="far fa-trash-alt fa-lg"></i></button>'

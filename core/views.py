@@ -7,7 +7,8 @@ from store.models import Store
 from stock_entry.models import StockEntry
 from stock_exit.models import StockExit
 from django.http import JsonResponse
-from ultils.ultils import currency_format
+import math
+from ultils.ultils import currency_format, porcent_format
 
 
 def login(request):
@@ -32,17 +33,31 @@ def logout(request):
     return redirect('/')
 
 
+def get_quantity_product_in_stock():
+  entry = int(math.fsum([entry.quantity for entry in StockEntry.objects.all()]))
+  exit = int(math.fsum([exit.quantity for exit in StockExit.objects.all()]))
+  return entry - exit
+
+
 def dashboard(request):
   product_quantity = len(Product.objects.all())
   provider_quantity = len(Provider.objects.all())
   store_quantity = len(Store.objects.all())
+  qt_product_total_in_stock = get_quantity_product_in_stock()
+  total_revenue = StockExit.get_total_revenue()
   total_cost = StockEntry.get_total_cost()
+  total_profit = total_revenue - total_cost
+  profit_margin = total_profit / total_revenue
   return render(request, 'core/index.html',
     {
-      'product_quantity': product_quantity,
-      'provider_quantity': provider_quantity,
-      'store_quantity': store_quantity,
-      'total_cost': total_cost
+      'product_quantity':product_quantity,
+      'provider_quantity':provider_quantity,
+      'store_quantity':store_quantity,
+      'qt_product_total_in_stock':qt_product_total_in_stock,
+      'total_revenue':currency_format(total_revenue),
+      'total_cost':currency_format(total_cost),
+      'total_profit':currency_format(total_profit),
+      'profit_margin':porcent_format(profit_margin)
     }
   )
 
@@ -51,16 +66,16 @@ def inventory(request):
   return render(request, 'core/inventory.html')
 
 
-def get_quantity_product_in_stock(id):
+def get_quantity_product_in_stock_by_id(id):
   return StockEntry.get_number_of_product_entries(id) - StockExit.get_number_of_product_exit(id)
 
 
-def get_total_profit(id):
+def get_total_profit_by_id(id):
   return StockExit.get_total_revenue_by_id(id) - StockEntry.get_total_cost_by_id(id)
 
 
 def get_status(id):
-  qt_product_in_stock = get_quantity_product_in_stock(id)
+  qt_product_in_stock = get_quantity_product_in_stock_by_id(id)
   product = Product.objects.get(id=id)
   qt_min = product.level_minimum
   qt_max = product.level_maximum
@@ -81,13 +96,13 @@ def get_data_inventory(request):
         "Produto":product.item,
         "Entradas":StockEntry.get_number_of_product_entries(product.id),
         "Saídas":StockExit.get_number_of_product_exit(product.id),
-        "Estoque Atual":get_quantity_product_in_stock(product.id),
+        "Estoque Atual":get_quantity_product_in_stock_by_id(product.id),
         "Estoque Mínimo":product.level_minimum,
         "Estoque Máximo":product.level_maximum,
         "Status":get_status(product.id),
         "Receita Total":currency_format(StockExit.get_total_revenue_by_id(product.id)),
         "Custo Total":currency_format(StockEntry.get_total_cost_by_id(product.id)),
-        "Lucro":currency_format(get_total_profit(product.id))
+        "Lucro":currency_format(get_total_profit_by_id(product.id))
       }
 
       for product in products

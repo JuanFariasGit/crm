@@ -29,7 +29,7 @@ class StockExitForm(forms.ModelForm):
     qt = self.cleaned_data.get('quantity')
     p = self.cleaned_data.get('product')
 
-    qt_p_in_stock = StockEntry.get_number_of_product_entries(p.id)
+    qt_p_in_stock = int(StockEntry.get_number_of_product_entries(p.id) - StockExit.get_number_of_product_exit(p.id))
     if qt_p_in_stock < qt:
       raise forms.ValidationError(f'Disponível em estoque {qt_p_in_stock} {p.item}.')
     elif qt <= 0:
