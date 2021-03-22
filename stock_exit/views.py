@@ -15,7 +15,7 @@ class StockExitListView(ListView):
         {
           "DT_RowId":f"row_{exit.id}",
           "Data da Venda":exit.get_link_update(),
-          "Produto":exit.product.item,
+          "Produto":exit.product.item if exit.product else '',
           "Loja":exit.store.store,
           "Quantidade":exit.quantity,
           "Preço Unitário":exit.get_price_unit(),

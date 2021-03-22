@@ -47,7 +47,7 @@ def dashboard(request):
   total_revenue = StockExit.get_total_revenue()
   total_cost = StockEntry.get_total_cost()
   total_profit = total_revenue - total_cost
-  profit_margin = total_profit / total_revenue
+  profit_margin = (total_profit / total_revenue) if total_revenue != 0 else 0
   return render(request, 'core/index.html',
     {
       'product_quantity':product_quantity,

@@ -64,4 +64,5 @@ class StockEntry(models.Model):
 
 
   def get_button_delete(self):
-    return f'<button class="btn btn-danger" onclick="deleteStockEntryModal(\'{self.id}\', \'{self.get_purchase_date()}\', \'{self.product.item}\')"><i class="far fa-trash-alt fa-lg"></i></button>'
+    product_item = self.product.item if self.product else ''
+    return f'<button class="btn btn-danger" onclick="deleteStockEntryModal(\'{self.id}\', \'{self.get_purchase_date()}\', \'{product_item}\')"><i class="far fa-trash-alt fa-lg"></i></button>'
