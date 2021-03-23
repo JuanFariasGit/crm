@@ -84,7 +84,7 @@
 
   const deleteProductModal = (id, item) => {
     $('#modal').modal('show')
-    $('#modal').find('.modal-header').html(`<h5><strong class="text-danger">ATENÇÃO!</strong> Todas as entradas e saídas que tem como produto <strong>${item}</strong> serão também deletados. Deseja realmente deletar o produto ?</h5>`)
+    $('#modal').find('.modal-header').html(`<h5><strong class="text-danger">ATENÇÃO!</strong> Todas as entradas e saídas que tem como produto <strong>${item}</strong> serão também deletados. Deseja realmente deletar ?</h5>`)
     $('#modal').find('.modal-footer').html(`<button class="btn btn-outline-secondary" onclick="closeModal()">Não</button> <button class="btn btn-primary" onclick="deleteProduct('${id}')">Sim</button>`)
   }
 

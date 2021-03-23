@@ -7,7 +7,7 @@ from django.forms.widgets import NumberInput
 
 class StockEntryForm(forms.ModelForm):
   purchase_date = forms.DateField(label='Data da Compra', widget=NumberInput(attrs={'type': 'date'}))
-  expiration_date = forms.DateField(label='Data de Validade', widget=NumberInput(attrs={'type': 'date'}))
+  expiration_date = forms.DateField(label='Data de Validade', required=False, widget=NumberInput(attrs={'type': 'date'}))
   product = forms.ModelChoiceField(Product.objects.all(), label='Produto')
   provider = forms.ModelChoiceField(Provider.objects.all(), label='Fornecedor')
   quantity = forms.IntegerField(label='Quantidade')
