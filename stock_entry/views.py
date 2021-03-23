@@ -15,7 +15,7 @@ class StockEntryListView(ListView):
         {
           "DT_RowId":f"row_{entry.id}",
           "Data da Compra":entry.get_link_update(),
-          "Produto":entry.product.item if entry.product else '',
+          "Produto":entry.product.item,
           "Data de Validade":entry.get_expiration_date(),
           "Fornecedor":entry.provider.company,
           "Quantidade":entry.quantity,

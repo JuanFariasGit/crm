@@ -82,7 +82,7 @@
 
   const deleteProviderModal = (id, empresa) => {
     $('#modal').modal('show')
-    $('#modal').find('.modal-header').html(`<h5>Deseja realmente deletar o fornecedor <strong class="text-danger">${empresa}</strong> ?</h5>`)
+    $('#modal').find('.modal-header').html(`<h5><strong class="text-danger">ATENÇÃO!</strong> Todas as entradas que tem como fornecedor <strong>${empresa}</strong> serão também deletados. Deseja realmente deletar ?</h5>`)
     $('#modal').find('.modal-footer').html(`<button class="btn btn-outline-secondary" onclick="closeModal()">Não</button> <button class="btn btn-primary" onclick="deleteProvider('${id}')">Sim</button>`)
   }
 

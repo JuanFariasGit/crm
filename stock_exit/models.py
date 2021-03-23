@@ -7,8 +7,8 @@ from ultils.ultils import currency_format, date_format
 
 class StockExit(models.Model):
   date_of_sale = models.DateField()
-  product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
-  store = models.ForeignKey(Store, null=True, on_delete=models.SET_NULL)
+  product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
+  store = models.ForeignKey(Store, null=True, on_delete=models.CASCADE)
   quantity = models.IntegerField()
   price_unit = models.DecimalField(decimal_places=2, max_digits=8)
 
@@ -55,5 +55,4 @@ class StockExit(models.Model):
 
 
   def get_button_delete(self):
-    product_item = self.product.item if self.product else ''
-    return f'<button class="btn btn-danger" onclick="deleteStockExitModal(\'{self.id}\', \'{self.get_date_of_sale()}\', \'{product_item}\')"><i class="far fa-trash-alt fa-lg"></i></button>'
+    return f'<button class="btn btn-danger" onclick="deleteStockExitModal(\'{self.id}\', \'{self.get_date_of_sale()}\', \'{self.product.item}\')"><i class="far fa-trash-alt fa-lg"></i></button>'
