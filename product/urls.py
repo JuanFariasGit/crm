@@ -11,16 +11,16 @@ from .views import (
 
 app_name = 'product'
 
-main = TemplateView.as_view(template_name='product/main.html')
-list = ProductListView.as_view()
-create = ProductCreateView.as_view()
-update = ProductUpdateView.as_view()
-delete = ProductDeleteView.as_view()
+main = login_required(TemplateView.as_view(template_name='product/main.html'))
+list = login_required(ProductListView.as_view())
+create = login_required(ProductCreateView.as_view())
+update = login_required(ProductUpdateView.as_view())
+delete = login_required(ProductDeleteView.as_view())
 
 urlpatterns = [
-    path('', login_required(main), name='main'),
-    path('list/', login_required(list), name='list'),
-    path('create/', login_required(create), name='create'),
-    path('update/<int:id>/', login_required(update), name='update'),
-    path('delete/', login_required(delete), name='delete')
+    path('', main, name='main'),
+    path('list/', list, name='list'),
+    path('create/', create, name='create'),
+    path('update/<int:id>/', update, name='update'),
+    path('delete/', delete, name='delete')
 ]
