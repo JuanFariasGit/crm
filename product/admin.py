@@ -4,7 +4,7 @@ from .forms import ProductForm
 
 
 class ProductAdmin(admin.ModelAdmin):
-  list_display = ['item', 'created', 'modified']
+    list_display = ['item', 'created', 'modified']
 
 
 admin.site.register(Product, ProductAdmin)
