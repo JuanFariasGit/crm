@@ -78,7 +78,7 @@ def get_quantity_product_in_stock_by_id(id):
 def get_total_profit_by_id(id):
     total_revenue = StockExit.get_total_revenue_by_id(id)
     total_cost = StockEntry.get_total_cost_by_id(id)
-    return total_profit - total_cost
+    return total_revenue - total_cost
 
 
 def get_status(id):
