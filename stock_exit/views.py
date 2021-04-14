@@ -37,7 +37,7 @@ class StockExitCreateView(CreateView):
 
     def get_success_url(self):
         message = "Saída cadastrada com sucesso !"
-        messages.add_message(self.request, messages.SUCCESS, )
+        messages.add_message(self.request, messages.SUCCESS, message)
         return reverse('stock_exit:main')
 
 
