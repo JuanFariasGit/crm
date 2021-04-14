@@ -107,10 +107,12 @@ def get_data_inventory(request):
             "Estoque Mínimo": product.level_minimum,
             "Estoque Máximo": product.level_maximum,
             "Status": get_status(product.id),
-            "Receita Total":
-            currency_format(StockExit.get_total_revenue_by_id(product.id)),
-            "Custo Total":
-            currency_format(StockEntry.get_total_cost_by_id(product.id)),
+            "Receita Total": currency_format(
+                StockExit.get_total_revenue_by_id(product.id),
+            ),
+            "Custo Total": currency_format(
+                StockEntry.get_total_cost_by_id(product.id),
+            ),
             "Lucro": currency_format(get_total_profit_by_id(product.id))
         }
 

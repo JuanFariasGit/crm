@@ -25,6 +25,8 @@ class Provider(models.Model):
         return f"""
         <button
         class="btn btn-danger"
-        onclick="deleteProviderModal(\'{self.id}\', \'{self.company}\')">
+        onclick="deleteProviderModal(
+        \'{self.id}\',
+        \'{self.company}\')">
         <i class="far fa-trash-alt fa-lg"></i>
         </button>"""

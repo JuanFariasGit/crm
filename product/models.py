@@ -26,7 +26,9 @@ class Product(models.Model):
         return f"""
         <button
         class="btn btn-danger"
-        onclick="deleteProductModal(\'{self.id}\', \'{self.item}\')">
+        onclick="deleteProductModal(
+        \'{self.id}\',
+        \'{self.item}\')">
         <i class="far fa-trash-alt fa-lg">
         </i></button>
         """
