@@ -3,7 +3,7 @@ from .models import Store
 
 
 class StoreAdmin(admin.ModelAdmin):
-  list_display = ['store', 'created', 'modified']
+    list_display = ['store', 'created', 'modified']
 
 
 admin.site.register(Store, StoreAdmin)
