@@ -9,8 +9,8 @@ from ultils.ultils import currency_format, date_format
 class StockEntry(models.Model):
     purchase_date = models.DateField()
     expiration_date = models.DateField(null=True, blank=True)
-    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
-    provider = models.ForeignKey(Provider, null=True, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     cost_unit = models.DecimalField(decimal_places=2, max_digits=8)
 

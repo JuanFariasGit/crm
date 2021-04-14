@@ -70,15 +70,15 @@ def inventory(request):
 
 
 def get_quantity_product_in_stock_by_id(id):
-    quantity_entry = StockEntry.get_number_of_product_entries(id)
-    quantity_exit = StockExit.get_number_of_product_exit(id)
-    return quantity_entry - quantity_exit
+    entry = StockEntry.get_number_of_product_entries(id)
+    exit = StockExit.get_number_of_product_exit(id)
+    return entry - exit
 
 
 def get_total_profit_by_id(id):
-    total_revenue = StockExit.get_total_revenue_by_id(id)
-    total_cost = StockEntry.get_total_cost_by_id(id)
-    return total_revenue - total_cost
+    revenue = StockExit.get_total_revenue_by_id(id)
+    cost = StockEntry.get_total_cost_by_id(id)
+    return revenue - cost
 
 
 def get_status(id):
