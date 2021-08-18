@@ -27,7 +27,8 @@ class StockEntry(models.Model):
     def __str__(self):
         return self.product.item
 
-    def get_absolute_url(self):
+    @staticmethod
+    def get_absolute_url():
         return reverse('stock_entry:main')
 
     def get_purchase_date(self):

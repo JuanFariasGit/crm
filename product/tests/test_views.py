@@ -38,6 +38,7 @@ class TestProductViews(TestCase):
             },
             follow=True
         )
+        self.assertContains(resp, 'juanfarias')
         self.assertContains(resp, 'Produto cadastrado com sucesso !')
 
     def test_create_field_required(self):
@@ -53,6 +54,7 @@ class TestProductViews(TestCase):
             },
             follow=True
         )
+        self.assertContains(resp, 'juanfarias')
         self.assertContains(resp, 'Erro ao cadastrar produto !')
         self.assertFormError(resp, 'form', 'code', 'Campo obrigatório')
 
@@ -70,6 +72,7 @@ class TestProductViews(TestCase):
             },
             follow=True
         )
+        self.assertContains(resp, 'juanfarias')
         self.assertContains(resp, 'Produto atualizado com sucesso !')
 
     def test_update_field_required(self):
@@ -86,12 +89,13 @@ class TestProductViews(TestCase):
             },
             follow=True
         )
+        self.assertContains(resp, 'juanfarias')
         self.assertContains(resp, 'Erro ao atualizar produto !')
         self.assertFormError(resp, 'form', 'code', 'Campo obrigatório')
 
     def test_delete(self):
         self.client.login(username='juanfarias', password='12345')
-        resp = self.client.post('/product/delete/', {'id':1}, follow=True)
+        resp = self.client.post('/product/delete/', {'id': 1}, follow=True)
         self.assertEqual(resp.status_code, 200)
 
     def test_delete_status_404(self):

@@ -20,7 +20,8 @@ class Provider(models.Model):
     def __str__(self):
         return self.company
 
-    def get_absolute_url(self):
+    @staticmethod
+    def get_absolute_url():
         return reverse("provider:main")
 
     def get_link_update(self):

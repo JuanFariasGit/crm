@@ -25,7 +25,8 @@ class StockExit(models.Model):
     def __str__(self):
         return self.product.item
 
-    def get_absolute_url(self):
+    @staticmethod
+    def get_absolute_url():
         return reverse('stock_exit:main')
 
     def get_date_of_sale(self):

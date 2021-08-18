@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 
 class Store(models.Model):
@@ -18,6 +19,10 @@ class Store(models.Model):
 
     def __str__(self):
         return self.store
+
+    @staticmethod
+    def get_absolute_url():
+        return reverse('stock_exit:main')
 
     def get_link_update(self):
         return f'<a href="update/{self.id}/">{self.store}</a>'

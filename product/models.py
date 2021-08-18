@@ -21,7 +21,8 @@ class Product(models.Model):
     def __str__(self):
         return self.item
 
-    def get_absolute_url(self):
+    @staticmethod
+    def get_absolute_url():
         return reverse('product:main')
 
     def get_link_update(self):
