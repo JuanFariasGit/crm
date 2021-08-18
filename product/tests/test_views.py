@@ -64,11 +64,11 @@ class TestProductViews(TestCase):
             '/product/update/1/',
             {
                 'id': 1,
-                'item': 'Caneta preta (Bic)',
+                'item': 'Caneta azul (Bic)',
                 'code': 'P001',
                 'unit_of_measure': 'unidade',
                 'level_minimum': 50,
-                'level_maximum': 100
+                'level_maximum': 150
             },
             follow=True
         )
@@ -81,11 +81,11 @@ class TestProductViews(TestCase):
             '/product/update/1/',
             {
                 'id': 1,
-                'item': 'Caneta preta (Bic)',
+                'item': 'Caneta azul (Bic)',
                 'code': '',
                 'unit_of_measure': 'unidade',
                 'level_minimum': 50,
-                'level_maximum': 100
+                'level_maximum': 150
             },
             follow=True
         )
@@ -93,7 +93,7 @@ class TestProductViews(TestCase):
         self.assertContains(resp, 'Erro ao atualizar produto !')
         self.assertFormError(resp, 'form', 'code', 'Campo obrigatório')
 
-    def test_delete(self):
+    def test_delete_status_200(self):
         self.client.login(username='juanfarias', password='12345')
         resp = self.client.post('/product/delete/', {'id': 1}, follow=True)
         self.assertEqual(resp.status_code, 200)
