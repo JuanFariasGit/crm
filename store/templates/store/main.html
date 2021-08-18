@@ -1,17 +1,6 @@
 {% extends "core/model-page.html" %}
 
 {% block content %}
-{% csrf_token %}
-{% if messages %}
-  {% for message in messages %}
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ message }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  {% endfor %}
-{% endif %}
 <div id="message-ajax"></div>
 <div class="table-responsive p-1">
   <h5 class="text-center">LOJAS</h5>
@@ -40,9 +29,6 @@
 
 {% block script %}
 <script>
-  const cookie = document.cookie
-  const csrf_token = cookie.split("=")[1]
-
   const table = $('#table').DataTable( {
     "responsive": true,
     "autoWidth": false,
@@ -54,7 +40,7 @@
       "method": "POST",
       "url": "{% url 'store:list' %}",
       "headers": {
-        "X-CSRFToken": csrf_token,
+        "X-CSRFToken": "{{ csrf_token }}",
       }
     },
     "columns": [
@@ -64,7 +50,7 @@
         {"data":"Endereço"},
         {"data":""}
     ],
-    "lengthMenu": [[5, 10, 15], [5, 10, 15]],
+    "lengthMenu": [5, 10, 15],
     "language": {
         "infoFiltered":   "(filtrado do total de _MAX_ registros)",
         "infoEmpty":      "Mostrando 0 até 0 de 0 registros",
@@ -97,14 +83,14 @@
       "method": "POST",
       "url": "{% url 'store:delete' %}",
       "headers": {
-        "X-CSRFToken": csrf_token,
+        "X-CSRFToken": "{{ csrf_token }}",
       },
       "data": {"id": id},
       success: function(response) {
         table.row(`#row_${id}`).remove().draw(false);
         closeModal()
         $("#message-ajax").html(`
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-${response.type} alert-dismissible fade show" role="alert">
           ${response.message}
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>

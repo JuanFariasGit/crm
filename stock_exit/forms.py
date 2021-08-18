@@ -3,6 +3,7 @@ from django.forms.widgets import NumberInput
 from product.models import Product
 from store.models import Store
 from .models import StockExit
+from django.db.models import Count
 from stock_entry.models import StockEntry
 
 
@@ -35,24 +36,3 @@ class StockExitForm(forms.ModelForm):
           'quantity',
           'price_unit'
         ]
-
-    def clean_quantity(self):
-        qt = self.cleaned_data.get('quantity')
-        p = self.cleaned_data.get('product')
-
-        number_entry = StockEntry.get_number_of_product_entries(p.id)
-        number_exit = StockExit.get_number_of_product_exit(p.id)
-
-        qt_p_in_stock = int(number_entry - number_exit)
-
-        if self.instance.id:
-            exit = StockExit.objects.filter(id=self.instance.id).first()
-            qt_p_in_stock = exit.quantity + qt_p_in_stock
-
-        if qt_p_in_stock < qt:
-            message = f'Disponível em estoque {qt_p_in_stock} {p.item}.'
-            raise forms.ValidationError(message)
-        elif qt <= 0:
-            message = 'Apenas valores inteiros maiores que 0.'
-            raise forms.ValidationError(message)
-        return qt

@@ -1,19 +1,21 @@
+from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
+
 from product.models import Product
 from provider.models import Provider
-from stock_exit.models import StockExit
 import math
 from ultils.ultils import currency_format, date_format
 
 
 class StockEntry(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     purchase_date = models.DateField()
     expiration_date = models.DateField(null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     provider = models.ForeignKey(Provider, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     cost_unit = models.DecimalField(decimal_places=2, max_digits=8)
-
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
@@ -25,6 +27,9 @@ class StockEntry(models.Model):
     def __str__(self):
         return self.product.item
 
+    def get_absolute_url(self):
+        return reverse('stock_entry:main')
+
     def get_purchase_date(self):
         return date_format(self.purchase_date)
 
@@ -33,30 +38,6 @@ class StockEntry(models.Model):
 
     def get_cost_unit(self):
         return currency_format(self.cost_unit)
-
-    def get_total_cost():
-        total_cost = [
-            entry.cost_unit*entry.quantity
-
-            for entry in StockEntry.objects.all()
-        ]
-        return math.fsum(total_cost)
-
-    def get_total_cost_by_id(id):
-        total_cost_by_id = [
-            entry.cost_unit*entry.quantity
-
-            for entry in StockEntry.objects.filter(product__id=id)
-        ]
-        return math.fsum(total_cost_by_id)
-
-    def get_number_of_product_entries(id):
-        number_of_product_entries = [
-            product_in_entry.quantity
-
-            for product_in_entry in StockEntry.objects.filter(product__id=id)
-        ]
-        return math.fsum(number_of_product_entries)
 
     def get_expiration_date(self):
         if self.expiration_date is None:

@@ -3,14 +3,14 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import StockEntry
 from django.http import JsonResponse
 from .forms import StockEntryForm
-from django.urls import reverse
 from django.contrib import messages
 
 
 class StockEntryListView(ListView):
-    def post(self, request):
-        stock_entry = StockEntry.objects.all()
-        response = {"data": [
+    @staticmethod
+    def post(request):
+        stock_entry = StockEntry.objects.filter(user=request.user).all()
+        data = {"data": [
             {
               "DT_RowId": f"row_{entry.id}",
               "Data da Compra": entry.get_link_update(),
@@ -26,43 +26,52 @@ class StockEntryListView(ListView):
             for entry in stock_entry
             ]
         }
-        return JsonResponse(response)
+        return JsonResponse(data=data, status=200)
 
 
 class StockEntryCreateView(CreateView):
     template_name = 'stock_entry/form.html'
     form_class = StockEntryForm
+    success_message = 'Entrada cadastrada com sucesso !'
+    error_message = 'Erro ao cadastrar entrada !'
 
     def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, self.success_message)
         return super().form_valid(form)
 
-    def get_success_url(self):
-        message = "Entrada cadastrada com sucesso !"
-        messages.add_message(self.request, messages.SUCCESS, message)
-        return reverse('stock_entry:main')
+    def form_invalid(self, form):
+        messages.success(self.request, self.error_message)
+        return super().form_invalid(form)
 
 
 class StockEntryUpdateView(UpdateView):
     template_name = 'stock_entry/form.html'
     form_class = StockEntryForm
+    success_message = 'Entrada atualizada com sucesso !'
+    error_message = 'Erro ao atualizar entrada'
 
-    def get_object(self):
-        id = self.kwargs.get('id')
-        return get_object_or_404(StockEntry, id=id)
+    def get_object(self, **kwargs):
+        entry_id = self.kwargs.get('id')
+        return get_object_or_404(StockEntry, id=entry_id, user=self.request.user)
 
     def form_valid(self, form):
+        messages.success(self.request, self.success_message)
         return super().form_valid(form)
 
-    def get_success_url(self):
-        message = "Entrada atualizada com sucesso !"
-        messages.add_message(self.request, messages.SUCCESS, message)
-        return reverse('stock_entry:main')
+    def form_invalid(self, form):
+        messages.error(self.request, self.error_message)
+        return super().form_invalid(form)
 
 
 class StockEntryDeleteView(DeleteView):
-    def post(self, request):
-        id = request.POST.get('id')
-        entry = StockEntry.objects.get(id=id)
-        entry.delete()
-        response = {'message': 'Entrada deletada com sucesso !'}
-        return JsonResponse(response)
+    @staticmethod
+    def post(request, **kwargs):
+        entry_id = request.POST.get('id')
+        entry = StockEntry.objects.filter(id=entry_id, user=request.user).first()
+        if entry:
+            entry.delete()
+            data = {'type': 'success', 'message': 'Entrada deletada com sucesso !'}
+        else:
+            data = {'type': 'danger', 'message': 'Entrada inexistente !'}
+        return JsonResponse(data=data, status=200)

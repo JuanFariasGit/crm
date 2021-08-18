@@ -1,12 +1,13 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
 class Store(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     store = models.CharField(max_length=100)
     phone = models.CharField(max_length=16)
     email = models.EmailField()
     address = models.CharField(max_length=250)
-
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 

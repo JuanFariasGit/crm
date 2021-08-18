@@ -4,13 +4,13 @@ from .models import Store
 from django.http import JsonResponse
 from .forms import StoreForm
 from django.contrib import messages
-from django.urls import reverse
 
 
 class StoreListView(ListView):
-    def post(self, request):
-        stores = Store.objects.all()
-        response = {'data': [
+    @staticmethod
+    def post(request):
+        stores = Store.objects.filter(user=request.user).all()
+        data = {'data': [
             {
               "DT_RowId": f"row_{store.id}",
               "Loja": store.get_link_update(),
@@ -23,43 +23,52 @@ class StoreListView(ListView):
             for store in stores
             ]
         }
-        return JsonResponse(response)
+        return JsonResponse(data=data, status=200)
 
 
 class StoreCreateView(CreateView):
     template_name = 'store/form.html'
     form_class = StoreForm
+    success_message = 'Loja cadastrada com sucesso !'
+    error_message = 'Erro ao cadastrar loja !'
 
     def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, self.success_message)
         return super().form_valid(form)
 
-    def get_success_url(self):
-        message = "Loja cadastrada com sucesso !"
-        messages.add_message(self.request, messages.SUCCESS, message)
-        return reverse('store:main')
+    def form_invalid(self, form):
+        messages.error(self.request, self.error_message)
+        return super().form_invalid(form)
 
 
 class StoreUpdateView(UpdateView):
     template_name = 'store/form.html'
     form_class = StoreForm
+    success_message = 'Loja atualizada com success !'
+    error_message = 'Erro ao atualizar loja !'
 
-    def get_object(self):
-        id = self.kwargs.get('id')
-        return get_object_or_404(Store, id=id)
+    def get_object(self, **kwargs):
+        store_id = self.kwargs.get('id')
+        return get_object_or_404(Store, id=store_id, user=self.request.user)
 
     def form_valid(self, form):
+        messages.success(self.request, self.success_message)
         return super().form_valid(form)
 
-    def get_success_url(self):
-        message = "Loja atualizada com sucesso !"
-        messages.add_message(self.request, messages.SUCCESS, message)
-        return reverse('store:main')
+    def form_invalid(self, form):
+        messages.error(self.request, self.error_message)
+        return super().form_invalid(form)
 
 
 class StoreDeleteView(DeleteView):
-    def post(self, request):
-        id = request.POST.get('id')
-        store = Store.objects.get(id=id)
-        store.delete()
-        response = {'message': 'Loja deletada com sucesso !'}
-        return JsonResponse(response)
+    @staticmethod
+    def post(request, **kwargs):
+        store_id = request.POST.get('id')
+        store = Store.objects.filter(id=store_id, user=request.user).first()
+        if store:
+            store.delete()
+            data = {'type': 'success', 'message': 'Loja deletada com sucesso !'}
+        else:
+            data = {'type': 'danger', 'message': 'Loja inexistente !'}
+        return JsonResponse(data=data, status=200)
