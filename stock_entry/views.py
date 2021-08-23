@@ -72,6 +72,8 @@ class StockEntryDeleteView(DeleteView):
         if entry:
             entry.delete()
             data = {'type': 'success', 'message': 'Entrada deletada com sucesso !'}
+            status = 200
         else:
             data = {'type': 'danger', 'message': 'Entrada inexistente !'}
-        return JsonResponse(data=data, status=200)
+            status = 404
+        return JsonResponse(data=data, status=status)

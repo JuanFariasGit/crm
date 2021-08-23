@@ -22,4 +22,3 @@ class TestProductModels(TestCase):
     def test_item(self):
         self.client.login(username='juanfarias', password='12345')
         self.assertEqual(self.product.item, 'Caneta azul (Bic)')
-        self.assertEqual(self.product.user.username, 'juanfarias')

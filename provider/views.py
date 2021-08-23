@@ -69,6 +69,8 @@ class ProviderDeleteView(DeleteView):
         if provider:
             provider.delete()
             data = {'type': 'success', 'message': 'Fornecedor deletado com sucesso !'}
+            status = 200
         else:
             data = {'type': 'danger', 'message': 'Fornecedor inexistente !'}
-        return JsonResponse(data=data, status=200)
+            status = 404
+        return JsonResponse(data=data, status=status)

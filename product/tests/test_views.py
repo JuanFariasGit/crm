@@ -56,7 +56,7 @@ class TestProductViews(TestCase):
         )
         self.assertContains(resp, 'juanfarias')
         self.assertContains(resp, 'Erro ao cadastrar produto !')
-        self.assertFormError(resp, 'form', 'code', 'Campo obrigatório')
+        self.assertFormError(resp, 'form', 'code', 'Este campo é obrigatório.')
 
     def test_update(self):
         self.client.login(username='juanfarias', password='12345')
@@ -91,14 +91,18 @@ class TestProductViews(TestCase):
         )
         self.assertContains(resp, 'juanfarias')
         self.assertContains(resp, 'Erro ao atualizar produto !')
-        self.assertFormError(resp, 'form', 'code', 'Campo obrigatório')
+        self.assertFormError(resp, 'form', 'code', 'Este campo é obrigatório.')
 
     def test_delete_status_200(self):
         self.client.login(username='juanfarias', password='12345')
         resp = self.client.post('/product/delete/', {'id': 1}, follow=True)
         self.assertEqual(resp.status_code, 200)
+        self.assertJSONEqual(str(resp.content, encoding='utf8'),
+                             {'type': 'success', 'message': 'Produto deletado com sucesso !'})
 
     def test_delete_status_404(self):
         self.client.login(username='juanfarias', password='12345')
         resp = self.client.post('/product/delete/', {'id': 2}, follow=True)
         self.assertEqual(resp.status_code, 404)
+        self.assertJSONEqual(str(resp.content, encoding='utf8'),
+                             {'type': 'danger', 'message': 'Produto inexistente !'})
