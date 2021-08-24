@@ -28,11 +28,6 @@ class Provider(models.Model):
         return f'<a href="update/{self.id}/">{self.company}</a>'
 
     def get_button_delete(self):
-        return f"""
-        <button
-        class="btn btn-danger"
-        onclick="deleteProviderModal(
-        \'{self.id}\',
-        \'{self.company}\')">
-        <i class="far fa-trash-alt fa-lg"></i>
-        </button>"""
+        return f"<button class=\"btn btn-danger\" onclick=\"deleteProviderModal(\'{self.id}\',\'{self.company}\')\">" \
+               "<i class=\"far fa-trash-alt fa-lg\"></i></button>"
+

@@ -16,9 +16,12 @@ class TestProductModels(TestCase):
         )
 
     def test_get_absolute_url(self):
-        self.client.login(username='juanfarias', password='12345')
         self.assertEqual(self.product.get_absolute_url(), '/product/')
 
-    def test_item(self):
-        self.client.login(username='juanfarias', password='12345')
-        self.assertEqual(self.product.item, 'Caneta azul (Bic)')
+    def test_get_link_update(self):
+        self.assertEqual(self.product.get_link_update(), '<a href="update/1/">Caneta azul (Bic)</a>')
+
+    def test_get_button_delete(self):
+        self.assertEqual(self.product.get_button_delete(),
+                         '<button class="btn btn-danger" onclick="deleteProductModal(\'1\',\'Caneta azul (Bic)\')">'
+                         '<i class="far fa-trash-alt fa-lg"></i></button>')

@@ -15,9 +15,12 @@ class TestProviderModels(TestCase):
         )
 
     def test_get_absolute_url(self):
-        self.client.login(username='juanfarias', password='12345')
         self.assertEqual(self.provider.get_absolute_url(), '/provider/')
 
-    def test_company(self):
-        self.client.login(username='juanfarias', password='12345')
-        self.assertEqual(self.provider.company, 'Fornecedor 1')
+    def test_get_link_update(self):
+        self.assertEqual(self.provider.get_link_update(), '<a href="update/1/">Fornecedor 1</a>')
+
+    def test_get_button_delete(self):
+        self.assertEqual(self.provider.get_button_delete(),
+                         '<button class="btn btn-danger" onclick="deleteProviderModal(\'1\',\'Fornecedor 1\')">'
+                         '<i class="far fa-trash-alt fa-lg"></i></button>')

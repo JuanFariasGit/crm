@@ -29,12 +29,5 @@ class Product(models.Model):
         return f'<a href="update/{self.id}/">{self.item}</a>'
 
     def get_button_delete(self):
-        return f"""
-        <button
-        class="btn btn-danger"
-        onclick="deleteProductModal(
-        \'{self.id}\',
-        \'{self.item}\')">
-        <i class="far fa-trash-alt fa-lg">
-        </i></button>
-        """
+        return f"<button class=\"btn btn-danger\" onclick=\"deleteProductModal(\'{self.id}\',\'{self.item}\')\">" \
+               "<i class=\"far fa-trash-alt fa-lg\"></i></button>"

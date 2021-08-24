@@ -10,7 +10,7 @@ class TestProviderViews(TestCase):
             user=User.objects.create_user(username='juanfarias', password='12345'),
             company='Fornecedor 1',
             phone='81 9 9999-9999',
-            email='fornecedo1@gmail.com',
+            email='fornecedor1@gmail.com',
             address='Rua Fornecedor 1'
         )
 
@@ -23,6 +23,17 @@ class TestProviderViews(TestCase):
         self.client.login(username='juanfarias', password='12345')
         resp = self.client.post('/provider/list/', follow=True)
         self.assertEqual(resp.status_code, 200)
+        self.assertJSONEqual(str(resp.content, encoding='utf-8'), {'data': [
+            {
+                "DT_RowId": f"row_1",
+                "Empresa": "<a href=\"update/1/\">Fornecedor 1</a>",
+                "Telefone": "81 9 9999-9999",
+                "E-mail": "fornecedor1@gmail.com",
+                "Endereço": "Rua Fornecedor 1",
+                "": "<button class=\"btn btn-danger\" onclick=\"deleteProviderModal('1','Fornecedor 1')\">"
+                    "<i class=\"far fa-trash-alt fa-lg\"></i></button>"
+            }
+        ]})
 
     def test_create(self):
         self.client.login(username='juanfarias', password='12345')
@@ -90,12 +101,12 @@ class TestProviderViews(TestCase):
         self.client.login(username='juanfarias', password='12345')
         resp = self.client.post('/provider/delete/', {'id': 1}, follow=True)
         self.assertEqual(resp.status_code, 200)
-        self.assertJSONEqual(str(resp.content, encoding='utf8'),
+        self.assertJSONEqual(str(resp.content, encoding='utf-8'),
                              {'type': 'success', 'message': 'Fornecedor deletado com sucesso !'})
 
     def test_delete_status_404(self):
         self.client.login(username='juanfarias', password='12345')
         resp = self.client.post('/provider/delete/', {'id': 2}, follow=True)
         self.assertEqual(resp.status_code, 404)
-        self.assertJSONEqual(str(resp.content, encoding='utf8'),
+        self.assertJSONEqual(str(resp.content, encoding='utf-8'),
                              {'type': 'danger', 'message': 'Fornecedor inexistente !'})

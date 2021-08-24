@@ -22,14 +22,11 @@ class Store(models.Model):
 
     @staticmethod
     def get_absolute_url():
-        return reverse('stock_exit:main')
+        return reverse('store:main')
 
     def get_link_update(self):
         return f'<a href="update/{self.id}/">{self.store}</a>'
 
     def get_button_delete(self):
-        return f"""<button class="btn btn-danger"
-        onclick="deleteStoreModal(
-        \'{self.id}\', \'{self.store}\')">
-        <i class="far fa-trash-alt fa-lg"></i>
-        </button>"""
+        return f"<button class=\"btn btn-danger\" onclick=\"deleteStoreModal(\'{self.id}\',\'{self.store}\')\">" \
+               "<i class=\"far fa-trash-alt fa-lg\"></i></button>"

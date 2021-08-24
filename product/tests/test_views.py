@@ -24,6 +24,19 @@ class TestProductViews(TestCase):
         self.client.login(username='juanfarias', password='12345')
         resp = self.client.post('/product/list/', follow=True)
         self.assertEqual(resp.status_code, 200)
+        self.assertJSONEqual(str(resp.content, encoding='utf-8'), {'data': [
+            {
+                "DT_RowId": "row_1",
+                "Item": "<a href=\"update/1/\">Caneta azul (Bic)</a>",
+                "Código do Produto": "P001",
+                "Unidade de Medida": "unidade",
+                "Estoque Mínimo": 50,
+                "Estoque Máximo": 150,
+                "": "<button class=\"btn btn-danger\" onclick=\"deleteProductModal('1','Caneta azul (Bic)')\">"
+                    "<i class=\"far fa-trash-alt fa-lg\"></i></button>"
+            }
+        ]
+        })
 
     def test_create(self):
         self.client.login(username='juanfarias', password='12345')
@@ -97,12 +110,12 @@ class TestProductViews(TestCase):
         self.client.login(username='juanfarias', password='12345')
         resp = self.client.post('/product/delete/', {'id': 1}, follow=True)
         self.assertEqual(resp.status_code, 200)
-        self.assertJSONEqual(str(resp.content, encoding='utf8'),
+        self.assertJSONEqual(str(resp.content, encoding='utf-8'),
                              {'type': 'success', 'message': 'Produto deletado com sucesso !'})
 
     def test_delete_status_404(self):
         self.client.login(username='juanfarias', password='12345')
         resp = self.client.post('/product/delete/', {'id': 2}, follow=True)
         self.assertEqual(resp.status_code, 404)
-        self.assertJSONEqual(str(resp.content, encoding='utf8'),
+        self.assertJSONEqual(str(resp.content, encoding='utf-8'),
                              {'type': 'danger', 'message': 'Produto inexistente !'})
