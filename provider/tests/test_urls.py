@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse, resolve
 
 
-class TestProviderUrls(TestCase):
+class TestProviderURLs(TestCase):
     def test_urls(self):
         self.assertEqual(reverse('provider:main'), '/provider/')
         self.assertEqual(reverse('provider:list'), '/provider/list/')

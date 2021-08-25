@@ -4,6 +4,7 @@ from django.urls import reverse
 
 from product.models import Product
 from store.models import Store
+
 from ultils.ultils import currency_format, date_format
 
 
@@ -23,7 +24,7 @@ class StockExit(models.Model):
         verbose_name_plural = 'Stock Exit'
 
     def __str__(self):
-        return self.product.item
+        return self.product__item
 
     @staticmethod
     def get_absolute_url():

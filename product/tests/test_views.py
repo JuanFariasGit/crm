@@ -26,14 +26,14 @@ class TestProductViews(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertJSONEqual(str(resp.content, encoding='utf-8'), {'data': [
             {
-                "DT_RowId": "row_1",
-                "Item": "<a href=\"update/1/\">Caneta azul (Bic)</a>",
-                "Código do Produto": "P001",
-                "Unidade de Medida": "unidade",
-                "Estoque Mínimo": 50,
-                "Estoque Máximo": 150,
-                "": "<button class=\"btn btn-danger\" onclick=\"deleteProductModal('1','Caneta azul (Bic)')\">"
-                    "<i class=\"far fa-trash-alt fa-lg\"></i></button>"
+                'DT_RowId': 'row_1',
+                'Item': '<a href="update/1/">Caneta azul (Bic)</a>',
+                'Código do Produto': 'P001',
+                'Unidade de Medida': 'unidade',
+                'Estoque Mínimo': 50,
+                'Estoque Máximo': 150,
+                "": '<button class="btn btn-danger" onclick="deleteProductModal(\'1\',\'Caneta azul (Bic)\')">'
+                    '<i class="far fa-trash-alt fa-lg"></i></button>'
             }
         ]
         })

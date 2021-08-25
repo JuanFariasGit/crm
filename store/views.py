@@ -45,7 +45,7 @@ class StoreCreateView(CreateView):
 class StoreUpdateView(UpdateView):
     template_name = 'store/form.html'
     form_class = StoreForm
-    success_message = 'Loja atualizada com success !'
+    success_message = 'Loja atualizada com sucesso !'
     error_message = 'Erro ao atualizar loja !'
 
     def get_object(self, **kwargs):
@@ -69,6 +69,8 @@ class StoreDeleteView(DeleteView):
         if store:
             store.delete()
             data = {'type': 'success', 'message': 'Loja deletada com sucesso !'}
+            status=200
         else:
             data = {'type': 'danger', 'message': 'Loja inexistente !'}
-        return JsonResponse(data=data, status=200)
+            status=404
+        return JsonResponse(data=data, status=status)
