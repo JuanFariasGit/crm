@@ -15,14 +15,8 @@ class StockEntryForm(forms.ModelForm):
         required=False,
         widget=NumberInput(attrs={'type': 'date'}),
     )
-    product = forms.ModelChoiceField(
-        Product.objects.all(),
-        label='Produto',
-    )
-    provider = forms.ModelChoiceField(
-        Provider.objects.all(),
-        label='Fornecedor',
-    )
+    product = forms.ModelChoiceField(label='Produto', queryset=None)
+    provider = forms.ModelChoiceField(label='Fornecedor', queryset=None)
     quantity = forms.IntegerField(label='Quantidade')
     cost_unit = forms.DecimalField(
         label='Custo Unitário (R$)',
@@ -40,3 +34,10 @@ class StockEntryForm(forms.ModelForm):
           'quantity',
           'cost_unit'
         ]
+
+    def __init__(self, *args, **kwargs):
+        super(StockEntryForm, self).__init__(*args, **kwargs)
+        user = kwargs['initial']['user']
+        if user.is_authenticated:
+            self.fields['product'].queryset = Product.objects.filter(user=user)
+            self.fields['provider'].queryset = Provider.objects.filter(user=user)

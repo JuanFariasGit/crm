@@ -6,6 +6,7 @@ from core import views
 
 dashboard = login_required(views.dashboard)
 inventory = login_required(views.inventory)
+inventory_data = login_required(views.inventory_data)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,6 +15,7 @@ urlpatterns = [
     path('login/logout/', views.logout, name='logout'),
     path('', dashboard, name='index'),
     path('inventory/', inventory, name='inventory'),
+    path('inventory/data/', inventory_data, name='inventory_data'),
     # includes
     path('product/', include('product.urls')),
     path('provider/', include('provider.urls')),

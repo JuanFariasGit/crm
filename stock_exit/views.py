@@ -9,7 +9,7 @@ from django.contrib import messages
 class StockExitListView(ListView):
     @staticmethod
     def post(request):
-        stock_exit = StockExit.objects.filter(user=request.user).all()
+        stock_exit = StockExit.objects.filter(user=request.user)
         data = {"data": [
             {
               "DT_RowId": f"row_{exit.id}",
@@ -34,6 +34,11 @@ class StockExitCreateView(CreateView):
     success_message = 'Saída cadastrada com sucesso !'
     error_message = 'Erro ao cadastra saída !'
 
+    def get_initial(self, *args, **kwargs):
+        initial = super(StockExitCreateView, self).get_initial(**kwargs)
+        initial['user'] = self.request.user
+        return initial
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         messages.success(self.request, self.success_message)
@@ -49,6 +54,11 @@ class StockExitUpdateView(UpdateView):
     form_class = StockExitForm
     success_message = 'Saída atualizar com sucesso !'
     error_message = 'Erro ao atualizar saída !'
+
+    def get_initial(self, *args, **kwargs):
+        initial = super(StockExitUpdateView, self).get_initial(**kwargs)
+        initial['user'] = self.request.user
+        return initial
 
     def get_object(self, **kwargs):
         exit_id = self.kwargs.get('id')

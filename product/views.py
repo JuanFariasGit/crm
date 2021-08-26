@@ -9,7 +9,7 @@ from django.contrib import messages
 class ProductListView(ListView):
     @staticmethod
     def post(request):
-        products = Product.objects.filter(user=request.user).all()
+        products = Product.objects.filter(user=request.user)
         data = {'data': [
             {
               "DT_RowId": f"row_{product.id}",

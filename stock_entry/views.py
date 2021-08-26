@@ -9,7 +9,7 @@ from django.contrib import messages
 class StockEntryListView(ListView):
     @staticmethod
     def post(request):
-        stock_entry = StockEntry.objects.filter(user=request.user).all()
+        stock_entry = StockEntry.objects.filter(user=request.user)
         data = {"data": [
             {
               "DT_RowId": f"row_{entry.id}",
@@ -35,6 +35,11 @@ class StockEntryCreateView(CreateView):
     success_message = 'Entrada cadastrada com sucesso !'
     error_message = 'Erro ao cadastrar entrada !'
 
+    def get_initial(self, *args, **kwargs):
+        initial = super(StockEntryCreateView, self).get_initial(**kwargs)
+        initial['user'] = self.request.user
+        return initial
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         messages.success(self.request, self.success_message)
@@ -50,6 +55,11 @@ class StockEntryUpdateView(UpdateView):
     form_class = StockEntryForm
     success_message = 'Entrada atualizada com sucesso !'
     error_message = 'Erro ao atualizar entrada'
+
+    def get_initial(self, *args, **kwargs):
+        initial = super(StockEntryUpdateView, self).get_initial(**kwargs)
+        initial['user'] = self.request.user
+        return initial
 
     def get_object(self, **kwargs):
         entry_id = self.kwargs.get('id')

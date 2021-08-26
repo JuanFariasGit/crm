@@ -9,7 +9,7 @@ from django.contrib import messages
 class ProviderListView(ListView):
     @staticmethod
     def post(request):
-        providers = Provider.objects.filter(user=request.user).all()
+        providers = Provider.objects.filter(user=request.user)
         data = {'data': [
             {
               "DT_RowId": f"row_{provider.id}",

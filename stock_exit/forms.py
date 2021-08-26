@@ -3,8 +3,6 @@ from django.forms.widgets import NumberInput
 from product.models import Product
 from store.models import Store
 from .models import StockExit
-from django.db.models import Count
-from stock_entry.models import StockEntry
 
 
 class StockExitForm(forms.ModelForm):
@@ -12,14 +10,8 @@ class StockExitForm(forms.ModelForm):
         label='Data da Venda',
         widget=NumberInput(attrs={'type': 'date'}),
     )
-    product = forms.ModelChoiceField(
-        Product.objects.all(),
-        label='Produto',
-    )
-    store = forms.ModelChoiceField(
-        Store.objects.all(),
-        label='Loja',
-    )
+    product = forms.ModelChoiceField(label='Produto', queryset=None)
+    store = forms.ModelChoiceField(label='Loja', queryset=None)
     quantity = forms.IntegerField(label='Quantidade')
     price_unit = forms.DecimalField(
         decimal_places=2,
@@ -36,3 +28,10 @@ class StockExitForm(forms.ModelForm):
           'quantity',
           'price_unit'
         ]
+
+    def __init__(self, *args, **kwargs):
+        super(StockExitForm, self).__init__(*args, **kwargs)
+        user = kwargs['initial']['user']
+        if user.is_authenticated:
+            self.fields['product'].queryset = Product.objects.filter(user=user)
+            self.fields['store'].queryset = Store.objects.filter(user=user)
