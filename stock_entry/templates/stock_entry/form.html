@@ -6,7 +6,8 @@
   {% if 'create' in request.path %} CADASTRAR ENTRADA {% endif %} 
   {% if 'update' in request.path %} EDITAR ENTRADA {% endif %}
 </h5>
-<form method="POST" autocomplete="off">{% csrf_token %}
+<form method="POST" autocomplete="off">
+  {% csrf_token %}
   <div class="row">
     <div class="col-md-4">
       {{ form.purchase_date|as_crispy_field }}

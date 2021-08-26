@@ -9,4 +9,4 @@ def date_format(date):
 
 
 def porcent_format(num):
-    return f'{num*100:.2f}%'
+    return f'{num*100:.2f}%'.replace('.', ',')

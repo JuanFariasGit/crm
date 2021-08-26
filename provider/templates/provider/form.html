@@ -6,7 +6,8 @@
   {% if 'create' in request.path %} CADASTRAR FORNECEDOR {% endif %} 
   {% if 'update' in request.path %} EDITAR FORNECEDOR {% endif %}
 </h5>
-<form method="POST" autocomplete="off">{% csrf_token %}
+<form method="POST" autocomplete="off">
+  {% csrf_token %}
   <div class="row">
     <div class="col-md-4">
       {{ form.company|as_crispy_field }}

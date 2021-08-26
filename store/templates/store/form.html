@@ -6,7 +6,8 @@
   {% if 'create' in request.path %} CADASTRAR LOJA {% endif %} 
   {% if 'update' in request.path %} EDITAR LOJA {% endif %}
 </h5>
-<form method="POST" autocomplete="off">{% csrf_token %}
+<form method="POST" autocomplete="off">
+  {% csrf_token %}
   <div class="row">
     <div class="col-md-4">
       {{ form.store|as_crispy_field }}

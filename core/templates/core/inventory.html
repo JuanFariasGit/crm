@@ -14,9 +14,6 @@
         <th class="min-desktop">Estoque Mínimo</th>
         <th class="min-desktop">Estoque Máximo</th>
         <th class="min-desktop">Status</th>
-        <th class="none">Receita Total</th>
-        <th class="none">Custo Total</th>
-        <th class="none">Lucro</th>
       </tr>
     </thead>
   </table>
@@ -25,17 +22,14 @@
 
 {% block script %}
 <script>
-  const cookie = document.cookie
-  const csrf_token = cookie.split("=")[1]
-
   const table = $('#table').DataTable( {
     "responsive": true,
     "autoWidth": false,
     "ajax": {
       "method": "POST",
-      "url": "{% url 'inventory-data' %}",
+      "url": "{% url 'inventory_data' %}",
       "headers": {
-        "X-CSRFToken": csrf_token,
+        "X-CSRFToken": '{{ csrf_token }}',
       }
     },
     "columns": [
@@ -45,12 +39,9 @@
         {"data":"Estoque Atual"},
         {"data":"Estoque Mínimo"},
         {"data":"Estoque Máximo"},
-        {"data":"Status"},
-        {"data":"Receita Total"},
-        {"data":"Custo Total"},
-        {"data":"Lucro"}
+        {"data":"Status"}
     ],
-    "lengthMenu": [[5, 10, 15], [5, 10, 15]],
+    "lengthMenu": [5, 10, 15],
     "language": {
         "infoFiltered":   "(filtrado do total de _MAX_ registros)",
         "infoEmpty":      "Mostrando 0 até 0 de 0 registros",

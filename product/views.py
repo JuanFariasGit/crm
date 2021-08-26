@@ -3,14 +3,14 @@ from .models import Product
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.http import JsonResponse
 from .forms import ProductForm
-from django.urls import reverse
 from django.contrib import messages
 
 
 class ProductListView(ListView):
-    def post(self, request):
-        products = Product.objects.all()
-        response = {'data': [
+    @staticmethod
+    def post(request):
+        products = Product.objects.filter(user=request.user)
+        data = {'data': [
             {
               "DT_RowId": f"row_{product.id}",
               "Item": product.get_link_update(),
@@ -24,43 +24,54 @@ class ProductListView(ListView):
             for product in products
             ]
         }
-        return JsonResponse(response)
+        return JsonResponse(data=data, status=200)
 
 
 class ProductCreateView(CreateView):
     template_name = 'product/form.html'
     form_class = ProductForm
+    success_message = 'Produto cadastrado com sucesso !'
+    error_message = 'Erro ao cadastrar produto !'
 
     def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, self.success_message)
         return super().form_valid(form)
 
-    def get_success_url(self):
-        message = "Produto cadastrado com sucesso !"
-        messages.add_message(self.request, messages.SUCCESS, message)
-        return reverse('product:main')
+    def form_invalid(self, form):
+        messages.error(self.request, self.error_message)
+        return super().form_invalid(form)
 
 
 class ProductUpdateView(UpdateView):
     template_name = 'product/form.html'
     form_class = ProductForm
+    success_message = 'Produto atualizado com sucesso !'
+    error_message = 'Erro ao atualizar produto !'
 
-    def get_object(self):
-        id = self.kwargs.get('id')
-        return get_object_or_404(Product, id=id)
+    def get_object(self, **kwargs):
+        product_id = self.kwargs.get('id')
+        return get_object_or_404(Product, id=product_id, user=self.request.user)
 
     def form_valid(self, form):
+        messages.success(self.request, self.success_message)
         return super().form_valid(form)
 
-    def get_success_url(self):
-        message = "Produto atualizado com sucesso !"
-        messages.add_message(self.request, messages.SUCCESS, message)
-        return reverse('product:main')
+    def form_invalid(self, form):
+        messages.error(self.request, self.error_message)
+        return super().form_invalid(form)
 
 
 class ProductDeleteView(DeleteView):
-    def post(self, request):
-        id = request.POST.get('id')
-        product = Product.objects.get(id=id)
-        product.delete()
-        response = {'message': 'Produto deletado com sucesso !'}
-        return JsonResponse(response)
+    @staticmethod
+    def post(request, **kwargs):
+        product_id = request.POST.get('id')
+        product = Product.objects.filter(id=product_id, user=request.user).first()
+        if product:
+            product.delete()
+            data = {'type': 'success', 'message': 'Produto deletado com sucesso !'}
+            status = 200
+        else:
+            data = {'type': 'danger', 'message': 'Produto inexistente !'}
+            status = 404
+        return JsonResponse(data=data, status=status)
