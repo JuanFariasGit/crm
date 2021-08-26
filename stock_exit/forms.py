@@ -32,6 +32,5 @@ class StockExitForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(StockExitForm, self).__init__(*args, **kwargs)
         user = kwargs['initial']['user']
-        if user.is_authenticated:
-            self.fields['product'].queryset = Product.objects.filter(user=user)
-            self.fields['store'].queryset = Store.objects.filter(user=user)
+        self.fields['product'].queryset = Product.objects.filter(user=user)
+        self.fields['store'].queryset = Store.objects.filter(user=user)

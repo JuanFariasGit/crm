@@ -38,6 +38,5 @@ class StockEntryForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(StockEntryForm, self).__init__(*args, **kwargs)
         user = kwargs['initial']['user']
-        if user.is_authenticated:
-            self.fields['product'].queryset = Product.objects.filter(user=user)
-            self.fields['provider'].queryset = Provider.objects.filter(user=user)
+        self.fields['product'].queryset = Product.objects.filter(user=user)
+        self.fields['provider'].queryset = Provider.objects.filter(user=user)
