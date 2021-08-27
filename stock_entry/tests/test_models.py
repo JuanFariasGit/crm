@@ -55,6 +55,6 @@ class TestStockEntryModels(TestCase):
 
     def test_get_button_delete(self):
         self.assertEqual(self.stock_entry.get_button_delete(),
-                             '<button class="btn btn-danger" onclick="deleteStockEntryModal(\'1\','
-                             '\'26/08/2021\',\'Caneta azul (Bic)\')">'
-                             '<i class="far fa-trash-alt fa-lg"></i></button>')
+                         '<button class="btn btn-danger" onclick="deleteStockEntryModal(\'1\','
+                         '\'26/08/2021\',\'Caneta azul (Bic)\')">'
+                         '<i class="far fa-trash-alt fa-lg"></i></button>')

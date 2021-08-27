@@ -54,7 +54,7 @@ class StockEntryUpdateView(UpdateView):
     template_name = 'stock_entry/form.html'
     form_class = StockEntryForm
     success_message = 'Entrada atualizada com sucesso !'
-    error_message = 'Erro ao atualizar entrada'
+    error_message = 'Erro ao atualizar entrada !'
 
     def get_initial(self, *args, **kwargs):
         initial = super(StockEntryUpdateView, self).get_initial(**kwargs)
