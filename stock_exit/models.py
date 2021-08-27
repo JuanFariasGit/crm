@@ -43,11 +43,6 @@ class StockExit(models.Model):
         return currency_format(self.price_unit*self.quantity)
 
     def get_button_delete(self):
-        return f"""
-        <button class="btn btn-danger"
-        onclick="deleteStockExitModal(
-        \'{self.id}\',
-        \'{self.get_date_of_sale()}\',
-        \'{self.product.item}\')">
-        <i class="far fa-trash-alt fa-lg"></i>
-        </button>"""
+        return f'<button class="btn btn-danger" onclick="deleteStockExitModal(\'{self.id}\',' \
+               f'\'{self.get_date_of_sale()}\',\'{self.product.item}\')">' \
+               '<i class="far fa-trash-alt fa-lg"></i></button>'

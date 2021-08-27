@@ -12,17 +12,17 @@ class StockExitListView(ListView):
         stock_exit = StockExit.objects.filter(user=request.user)
         data = {"data": [
             {
-              "DT_RowId": f"row_{exit.id}",
-              "Data da Venda": exit.get_link_update(),
-              "Produto": exit.product.item,
-              "Loja": exit.store.store,
-              "Quantidade": exit.quantity,
-              "Preço Unitário": exit.get_price_unit(),
-              "Total": exit.get_total_sale(),
-              "": exit.get_button_delete()
+              "DT_RowId": f"row_{exit_.id}",
+              "Data da Venda": exit_.get_link_update(),
+              "Produto": exit_.product.item,
+              "Loja": exit_.store.store,
+              "Quantidade": exit_.quantity,
+              "Preço Unitário": exit_.get_price_unit(),
+              "Total": exit_.get_total_sale(),
+              "": exit_.get_button_delete()
             }
 
-            for exit in stock_exit
+            for exit_ in stock_exit
             ]
         }
         return JsonResponse(data=data, status=200)

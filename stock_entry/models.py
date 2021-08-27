@@ -50,12 +50,6 @@ class StockEntry(models.Model):
         return f'<a href="update/{self.id}/">{self.get_purchase_date()}</a>'
 
     def get_button_delete(self):
-        return f"""
-        <button
-        class="btn btn-danger"
-        onclick="deleteStockEntryModal(
-        \'{self.id}\',
-        \'{self.get_purchase_date()}\',
-        \'{self.product.item}\')">
-        <i class="far fa-trash-alt fa-lg"></i>
-        </button>"""
+        return f'<button class="btn btn-danger" onclick="deleteStockEntryModal(\'{self.id}\',' \
+               f'\'{self.get_purchase_date()}\',\'{self.product.item}\')">' \
+               '<i class="far fa-trash-alt fa-lg"></i></button>'

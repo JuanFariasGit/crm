@@ -38,7 +38,6 @@ class StockExitForm(forms.ModelForm):
         self.fields['product'].queryset = Product.objects.filter(user=user)
         self.fields['store'].queryset = Store.objects.filter(user=user)
 
-
     def clean_quantity(self):
         qt = self.cleaned_data.get('quantity')
         p = self.cleaned_data.get('product')
@@ -50,8 +49,8 @@ class StockExitForm(forms.ModelForm):
         total_product_in_stock = total_product_entry_of_stock['qt'] - total_product_exit_of_stock['qt']
 
         if self.instance.id:
-            exit = StockExit.objects.filter(id=self.instance.id, user=self.instance.user).first()
-            qt_p_in_stock = exit.quantity + total_product_in_stock
+            exit_ = StockExit.objects.filter(id=self.instance.id, user=self.instance.user).first()
+            qt_p_in_stock = exit_.quantity + total_product_in_stock
 
         if qt_p_in_stock < qt:
             message = f'Disponível em estoque {qt_p_in_stock} {p.item}.'
