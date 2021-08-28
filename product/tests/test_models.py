@@ -15,6 +15,9 @@ class TestProductModels(TestCase):
             level_maximum=150
         )
 
+    def test__str__(self):
+        self.assertEqual(self.product.__str__(), 'Caneta azul (Bic)')
+
     def test_get_absolute_url(self):
         self.assertEqual(self.product.get_absolute_url(), '/product/')
 

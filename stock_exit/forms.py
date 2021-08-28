@@ -42,19 +42,22 @@ class StockExitForm(forms.ModelForm):
         qt = self.cleaned_data.get('quantity')
         p = self.cleaned_data.get('product')
 
-        total_product_entry_of_stock = StockEntry.objects.filter(product__item=p.item, user=p.user). \
-            aggregate(qt=Coalesce(Sum('quantity'), 0))
-        total_product_exit_of_stock = StockExit.objects.filter(product__item=p.item, user=p.user). \
-            aggregate(qt=Coalesce(Sum('quantity'), 0))
-        total_product_in_stock = total_product_entry_of_stock['qt'] - total_product_exit_of_stock['qt']
+        if (qt and p):
+            total_product_entry_of_stock = StockEntry.objects.filter(product__item=p.item, user=p.user). \
+                aggregate(qt=Coalesce(Sum('quantity'), 0))
+            total_product_exit_of_stock = StockExit.objects.filter(product__item=p.item, user=p.user). \
+                aggregate(qt=Coalesce(Sum('quantity'), 0))
+            total_product_in_stock = total_product_entry_of_stock['qt'] - total_product_exit_of_stock['qt']
 
-        if self.instance.id:
-            exit_ = StockExit.objects.filter(id=self.instance.id, user=self.instance.user).first()
-            qt_p_in_stock = exit_.quantity + total_product_in_stock
+            if self.instance.id:
+                exit_ = StockExit.objects.filter(id=self.instance.id, user=self.instance.user).first()
+                total_product_in_stock = exit_.quantity + total_product_in_stock
 
-        if qt_p_in_stock < qt:
-            message = f'Disponível em estoque {qt_p_in_stock} {p.item}.'
-            raise forms.ValidationError(message)
-        elif qt <= 0:
-            message = 'Apenas valores inteiros maiores que 0.'
-            raise forms.ValidationError(message)
+            if total_product_in_stock < qt:
+                message = f'Disponível em estoque {total_product_in_stock} {p.item}.'
+                raise forms.ValidationError(message)
+            elif qt <= 0:
+                message = 'Apenas valores inteiros maiores que 0.'
+                raise forms.ValidationError(message)
+
+            return qt

@@ -35,6 +35,9 @@ class TestStockEntryModels(TestCase):
             cost_unit=1.25
         )
 
+    def test__str__(self):
+        self.assertEqual(self.stock_entry.__str__(), 'Caneta azul (Bic)')
+
     def test_get_absolute_url(self):
         self.assertEqual(self.stock_entry.get_absolute_url(), '/stock_entry/')
 

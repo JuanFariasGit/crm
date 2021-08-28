@@ -14,6 +14,9 @@ class TestProviderModels(TestCase):
             address='Rua fornecedor 1'
         )
 
+    def test__str__(self):
+        self.assertEqual(self.provider.__str__(), 'Fornecedor 1')
+
     def test_get_absolute_url(self):
         self.assertEqual(self.provider.get_absolute_url(), '/provider/')
 

@@ -14,6 +14,9 @@ class TestStoreModels(TestCase):
             address='Rua Loja 1'
         )
 
+    def test__str__(self):
+        self.assertEqual(self.store.__str__(), 'Loja 1')
+
     def test_get_absolute_url(self):
         self.assertEqual(self.store.get_absolute_url(), '/store/')
 

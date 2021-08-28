@@ -32,7 +32,7 @@ class StockExitCreateView(CreateView):
     template_name = 'stock_exit/form.html'
     form_class = StockExitForm
     success_message = 'Saída cadastrada com sucesso !'
-    error_message = 'Erro ao cadastra saída !'
+    error_message = 'Erro ao cadastrar saída !'
 
     def get_initial(self, *args, **kwargs):
         initial = super(StockExitCreateView, self).get_initial(**kwargs)
@@ -52,7 +52,7 @@ class StockExitCreateView(CreateView):
 class StockExitUpdateView(UpdateView):
     template_name = 'stock_exit/form.html'
     form_class = StockExitForm
-    success_message = 'Saída atualizar com sucesso !'
+    success_message = 'Saída atualizada com sucesso !'
     error_message = 'Erro ao atualizar saída !'
 
     def get_initial(self, *args, **kwargs):
@@ -81,6 +81,8 @@ class StockExitDeleteView(DeleteView):
         if exit:
             exit.delete()
             data = {'type': 'success', 'message': 'Saída deletada com sucesso !'}
+            status = 200
         else:
             data = {'type': 'danger', 'message': 'Saída inexistente !'}
-        return JsonResponse(data=data, status=200)
+            status = 404
+        return JsonResponse(data=data, status=status)

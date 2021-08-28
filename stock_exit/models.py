@@ -24,7 +24,7 @@ class StockExit(models.Model):
         verbose_name_plural = 'Stock Exit'
 
     def __str__(self):
-        return self.product__item
+        return self.product.item
 
     @staticmethod
     def get_absolute_url():
@@ -33,14 +33,14 @@ class StockExit(models.Model):
     def get_date_of_sale(self):
         return date_format(self.date_of_sale)
 
-    def get_link_update(self):
-        return f'<a href="update/{self.id}/">{self.get_date_of_sale()}</a>'
-
     def get_price_unit(self):
         return currency_format(self.price_unit)
 
     def get_total_sale(self):
         return currency_format(self.price_unit*self.quantity)
+
+    def get_link_update(self):
+        return f'<a href="update/{self.id}/">{self.get_date_of_sale()}</a>'
 
     def get_button_delete(self):
         return f'<button class="btn btn-danger" onclick="deleteStockExitModal(\'{self.id}\',' \
