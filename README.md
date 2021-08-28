@@ -15,7 +15,7 @@ Com que aprendi com professor Rafael Galleani na Digital Innovation One Inc. e m
 git clone https://github.com/JuanFariasGit/crm.git
 cd crm
 python -m venv .venv
-.venv/Script/activate
+.venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py createsuperuser
