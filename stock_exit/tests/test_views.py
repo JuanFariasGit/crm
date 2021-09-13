@@ -125,6 +125,59 @@ class TestStockExitViews(TestCase):
         self.assertContains(resp, 'Erro ao cadastrar saída !')
         self.assertFormError(resp, 'form', 'product', 'Este campo é obrigatório.')
 
+    def test_update(self):
+        self.client.login(username='juanfarias', password='12345')
+        resp = self.client.post(
+            '/stock_exit/update/1/',
+            {
+                'id': 1,
+                'date_of_sale': date(2021, 8, 26),
+                'product': 1,
+                'store': 1,
+                'quantity': 120,
+                'price_unit': 3.25
+            },
+            follow=True
+        )
+        self.assertContains(resp, 'juanfarias')
+        self.assertContains(resp, 'Saída atualizada com sucesso !')
+
+    def test_update_clean_quantity(self):
+        self.client.login(username='juanfarias', password='12345')
+        resp = self.client.post(
+            '/stock_exit/update/1/',
+            {
+                'id': 1,
+                'date_of_sale': date(2021, 8, 26),
+                'product': 1,
+                'store': 1,
+                'quantity': 250,
+                'price_unit': 3.25
+            },
+            follow=True
+        )
+        self.assertContains(resp, 'juanfarias')
+        self.assertContains(resp, 'Erro ao atualizar saída !')
+        self.assertFormError(resp, 'form', 'quantity', 'Disponível em estoque 200 Caneta azul (Bic).')
+
+    def test_update_field_required(self):
+        self.client.login(username='juanfarias', password='12345')
+        resp = self.client.post(
+            '/stock_exit/update/1/',
+            {
+                'id': 1,
+                'date_of_sale': date(2021, 8, 26),
+                'product': '',
+                'store': 1,
+                'quantity': 250,
+                'price_unit': 3.25
+            },
+            follow=True
+        )
+        self.assertContains(resp, 'juanfarias')
+        self.assertContains(resp, 'Erro ao atualizar saída !')
+        self.assertFormError(resp, 'form', 'product', 'Este campo é obrigatório.')
+
     def test_delete_status_200(self):
         self.client.login(username='juanfarias', password='12345')
         resp = self.client.post('/stock_exit/delete/', {'id': 1}, follow=True)
