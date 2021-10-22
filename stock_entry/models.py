@@ -24,9 +24,6 @@ class StockEntry(models.Model):
         verbose_name = 'Stock Entry'
         verbose_name_plural = 'Stock Entry'
 
-    def __str__(self):
-        return self.product.item
-
     @staticmethod
     def get_absolute_url():
         return reverse('stock_entry:main')

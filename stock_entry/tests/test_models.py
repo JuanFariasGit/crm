@@ -36,7 +36,7 @@ class TestStockEntryModels(TestCase):
         )
 
     def test__str__(self):
-        self.assertEqual(self.stock_entry.__str__(), 'Caneta azul (Bic)')
+        self.assertEqual(self.stock_entry.product.item, 'Caneta azul (Bic)')
 
     def test_get_absolute_url(self):
         self.assertEqual(self.stock_entry.get_absolute_url(), '/stock_entry/')

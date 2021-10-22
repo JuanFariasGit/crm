@@ -23,9 +23,6 @@ class StockExit(models.Model):
         verbose_name = 'Stock Exit'
         verbose_name_plural = 'Stock Exit'
 
-    def __str__(self):
-        return self.product.item
-
     @staticmethod
     def get_absolute_url():
         return reverse('stock_exit:main')
