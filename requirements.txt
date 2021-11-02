@@ -1,5 +1,12 @@
 asgiref==3.3.1
+dj-config-url==0.1.1
 Django==3.1.7
 django-crispy-forms==1.11.1
+environs==9.3.4
+gunicorn==20.1.0
+marshmallow==3.14.0
+psycopg2-binary==2.9.1
+python-dotenv==0.19.1
 pytz==2021.1
 sqlparse==0.4.1
+whitenoise==5.3.0
