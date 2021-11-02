@@ -11,8 +11,8 @@ Com que aprendi com professor Rafael Galleani na Digital Innovation One Inc. e m
 
 ### Disponivel em https://app-crm-gestao-estoque.herokuapp.com/
 
-Nome de Usuario: Demo
-Senha: crmdegestaodeestoque123
+- Nome de Usuário: Demo
+- Senha: crmdegestaodeestoque123
 
 ### Rodando o projeto
 
