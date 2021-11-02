@@ -32,7 +32,7 @@ DEBUG = False
 SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-ALLOWED_HOSTS = ['https://app-crm-gestao-estoque.herokuapp.com/']
+ALLOWED_HOSTS = ['app-crm-gestao-estoque.herokuapp.com/']
 
 # Application definition
 
