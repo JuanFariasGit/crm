@@ -13,16 +13,3 @@ Com que aprendi com professor Rafael Galleani na Digital Innovation One Inc. e m
 
 - Nome de Usuário: Demo
 - Senha: crmdegestaodeestoque123
-
-### Rodando o projeto
-
-~~~
-git clone https://github.com/JuanFariasGit/crm.git
-cd crm
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py createsuperuser
-python manage.py runserver
-~~~
