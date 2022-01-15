@@ -8,6 +8,7 @@
   <table id="table" class="table table-striped table-bordered text-center">
     <thead class="thead-dark">
       <tr>
+        <th class="all">ID</th>
         <th class="min-tablet">Data da Venda</th>
         <th class="all">Produto</th>
         <th class="min-desktop">Loja</th>
@@ -47,6 +48,7 @@
       }
     },
     "columns": [
+        {"data":"ID"},
         {"data":"Data da Venda"},
         {"data":"Produto"},
         {"data":"Loja"},
@@ -73,7 +75,7 @@
 
   const deleteStockExitModal = (id, data_venda, produto) => {
     $('#modal').modal('show')
-    $('#modal').find('.modal-header').html(`<h5>Deseja realmente deletar a saída do produto <strong class="text-danger">${produto}</strong> do dia <strong class="text-danger">${data_venda}</strong> ?</h5>`)
+    $('#modal').find('.modal-header').html(`<h5>Deseja realmente deletar a saída do produto <strong class="text-danger">${produto}</strong> do dia <strong class="text-danger">${data_venda}</strong> de ID <strong class="text-danger">${id}</strong> ?</h5>`)
     $('#modal').find('.modal-footer').html(`<button class="btn btn-outline-secondary" onclick="closeModal()">Não</button> <button class="btn btn-primary" onclick="deleteStockExit('${id}')">Sim</button>`)
   }
 

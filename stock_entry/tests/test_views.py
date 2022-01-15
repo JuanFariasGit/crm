@@ -46,6 +46,7 @@ class TestStockEntryViews(TestCase):
         self.assertJSONEqual(str(resp.content, encoding='utf-8'), {'data': [
             {
                 "DT_RowId": "row_1",
+                "ID": 1,
                 "Data da Compra": '<a href="update/1/">26/08/2021</a>',
                 "Produto": "Caneta azul (Bic)",
                 "Data de Validade": "Sem validade",

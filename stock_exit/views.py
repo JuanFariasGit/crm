@@ -9,10 +9,12 @@ from django.contrib import messages
 class StockExitListView(ListView):
     @staticmethod
     def post(request):
-        stock_exit = StockExit.objects.filter(user=request.user)
+        stock_exit = StockExit.objects.filter(user=request.user).prefetch_related('product')\
+            .prefetch_related('store')
         data = {"data": [
             {
               "DT_RowId": f"row_{exit_.id}",
+              "ID": exit_.id,
               "Data da Venda": exit_.get_link_update(),
               "Produto": exit_.product.item,
               "Loja": exit_.store.store,

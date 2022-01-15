@@ -63,6 +63,7 @@ class TestStockExitViews(TestCase):
         self.assertJSONEqual(str(resp.content, encoding='utf-8'), {'data': [
             {
                 "DT_RowId": f"row_1",
+                "ID": 1,
                 "Data da Venda": '<a href="update/1/">26/08/2021</a>',
                 "Produto": 'Caneta azul (Bic)',
                 "Loja": 'Loja 1',

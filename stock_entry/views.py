@@ -9,10 +9,12 @@ from django.contrib import messages
 class StockEntryListView(ListView):
     @staticmethod
     def post(request):
-        stock_entry = StockEntry.objects.filter(user=request.user)
+        stock_entry = StockEntry.objects.filter(user=request.user).prefetch_related('product').\
+            prefetch_related('provider')
         data = {"data": [
             {
               "DT_RowId": f"row_{entry.id}",
+              "ID": entry.id,
               "Data da Compra": entry.get_link_update(),
               "Produto": entry.product.item,
               "Data de Validade": entry.get_expiration_date(),
@@ -46,7 +48,7 @@ class StockEntryCreateView(CreateView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        messages.success(self.request, self.error_message)
+        messages.error(self.request, self.error_message)
         return super().form_invalid(form)
 
 

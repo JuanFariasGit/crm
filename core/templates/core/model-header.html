@@ -27,13 +27,13 @@
                 </div>
             </li>
             <li class="nav-item {% if 'stock_entry' in request.path %}active{% endif %} ">
-                <a class="nav-link" href="{% url 'stock_entry:main' %}">ENTRADAS</a>
+                <a class="nav-link" href="{% url 'stock_entry:main' %}"><i class="far fa-arrow-alt-circle-up"></i> ENTRADAS</a>
             </li>
             <li class="nav-item {% if 'stock_exit' in request.path %}active{% endif %} ">
-                <a class="nav-link" href="{% url 'stock_exit:main' %}">SAÍDAS</a>
+                <a class="nav-link" href="{% url 'stock_exit:main' %}"><i class="far fa-arrow-alt-circle-down"></i> SAÍDAS</a>
             </li>
             <li class="nav-item {% if request.path == '/inventory/' %}active{% endif %} ">
-                <a class="nav-link" href="{% url 'inventory' %}">INVENTÁRIO</a>
+                <a class="nav-link" href="{% url 'inventory' %}"><i class="fas fa-desktop"></i> INVENTÁRIO</a>
             </li>
         </ul>
         {% if user.is_authenticated %}

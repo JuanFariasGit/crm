@@ -13,7 +13,7 @@ class StockExit(models.Model):
     date_of_sale = models.DateField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
+    quantity = models.PositiveIntegerField()
     price_unit = models.DecimalField(decimal_places=2, max_digits=8)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)

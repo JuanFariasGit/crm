@@ -14,7 +14,7 @@ class StockEntry(models.Model):
     expiration_date = models.DateField(null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     provider = models.ForeignKey(Provider, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
+    quantity = models.PositiveIntegerField()
     cost_unit = models.DecimalField(decimal_places=2, max_digits=8)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
