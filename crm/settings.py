@@ -42,13 +42,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #libs
     'crispy_forms',
+    'cloudinary',
+    'cloudinary_storage',
     #apps
-    'core',
-    'product',
-    'provider',
-    'store',
-    'stock_entry',
-    'stock_exit'
+    'apps.profile',
+    'apps.core',
+    'apps.product',
+    'apps.provider',
+    'apps.store',
+    'apps.stock_entry',
+    'apps.stock_exit'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -132,9 +135,24 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-LOGIN_URL = '/login/'
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
+LOGIN_URL = '/account/login/'
+
+LOGIN_REDIRECT_URL = '/'
 
 try:
     from .local_settings import *
 except ImportError:
     pass
+
+if not DEBUG:
+    CLOUDINARY_STORAGE = {
+            'CLOUD_NAME': config('CLOUD_NAME'),
+            'API_KEY': config('API_KEY'),
+            'API_SECRET': config('API_SECRET'),
+        }
+
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.24/r-2.2.7/datatables.min.css">
+    <title>CRM</title>
+    <style>
+    html, body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    main {
+      flex: 1 0 auto;
+      margin: 0.5rem;
+    }
+
+    footer {
+      flex-shrink: none;
+    }
+
+    .modal-dialog {
+      min-width: 800px !important;
+    }
+
+    .modal-header {
+      margin: 0 auto !important;
+    }
+
+    .avatar-nav {
+      margin: 0 0.5rem;
+      vertical-align: middle;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+
+    .avatar {
+      vertical-align: middle;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+    </style>
+</head>
+<body>
+<header>
+    {% include "core/model-header.html" %}
+</header>
+<main>
+    <div class="container-fluid">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'success' %}success{% else %}danger{% endif %}
+            alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+</main>
+<footer class="bg-dark p-2">
+    {% include "core/model-footer.html" %}
+</footer>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.24/r-2.2.7/datatables.min.js"></script>
+{% block script %}{% endblock %}
+</body>
+</html>
